@@ -8,7 +8,17 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.login-card {
+.login-notice-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  width: 100%;
+  max-width: 950px;
+  margin-top: 40px;
+}
+
+.login-card,
+.notice-card {
   width: 100%;
   max-width: 450px;
   background-color: white;
@@ -18,16 +28,32 @@
   margin-bottom: 60px;
 }
 
-.login-header {
+.login-header,
+.notice-header {
   text-align: center;
   margin-bottom: 30px;
 }
 
-.login-title {
+.login-title,
+.notice-title {
   margin: 0;
   color: #333;
   font-size: 28px;
   font-weight: 700;
+  text-align: center;
+  flex: 1;
+}
+.notice-title-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.school-logo {
+  position: absolute;
+  right: 0;
+  height: 30px;
+  width: auto;
 }
 
 .login-error {
@@ -117,7 +143,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-top: 10px;
+  margin-top: 30px;
 }
 
 .login-button:hover {
@@ -127,4 +153,111 @@
 .login-button:disabled {
   background-color: #a0aec0;
   cursor: not-allowed;
+}
+
+.notice-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.notice-item {
+  padding: 15px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.notice-item:last-child {
+  border-bottom: none;
+}
+
+.notice-item h3 {
+  margin: 0 0 10px 0;
+  color: #4a5568;
+  font-size: 16px;
+}
+
+.notice-item p {
+  margin: 0 0 10px 0;
+  color: #718096;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.notice-date {
+  display: block;
+  text-align: right;
+  color: #a0aec0;
+  font-size: 12px;
+}
+
+.user-info-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.user-info-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+}
+
+.user-info-details {
+  flex: 1;
+}
+
+.user-info-details h3 {
+  margin: 0 0 5px 0;
+  font-size: 1.2rem;
+  color: #333;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.user-info-details p {
+  margin: 0;
+  color: #666;
+  margin-top: 30px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.test-controls {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+}
+
+.test-toggle-button {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.test-toggle-button:hover {
+  background-color: #5a6268;
+}
+
+@media (max-width: 900px) {
+  .login-notice-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .login-card,
+  .notice-card {
+    max-width: 100%;
+  }
 }
