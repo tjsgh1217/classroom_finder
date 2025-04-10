@@ -1,8 +1,15 @@
 import { Injectable, ConflictException, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { DynamoDB } from 'aws-sdk';
-import * as bcrypt from 'bcrypt'; 
+import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import {
+  DynamoDBDocumentClient,
+  GetCommand,
+  PutCommand,
+  UpdateCommand,
+  DeleteCommand,
+} from '@aws-sdk/lib-dynamodb';
 
 interface User {
   studentId: string;
@@ -13,31 +20,25 @@ interface User {
 
 @Injectable()
 export class AuthService {
-  private dynamoDb: DynamoDB.DocumentClient;
-  private tableName: string;
-  private jwtSecret: string = 'MY_SECRET';
+  private readonly db: DynamoDBDocumentClient;
+  private readonly tableName: string;
+  private readonly jwtSecret: string;
 
   constructor(private configService: ConfigService) {
-    // 환경변수에서 값 불러오기
+    // 환경변수 로드
     const region = this.configService.get<string>('AWS_REGION') || 'ap-northeast-2';
     this.tableName = this.configService.get<string>('USERS_TABLE') || 'Users';
-    this.jwtSecret = this.configService.get<string>('JWT_SECRET') || this.jwtSecret;
-    
-    // 환경변수를 통해 AWS 자격 증명을 읽어옴
-    const accessKeyId = this.configService.get<string>('AWS_ACCESS_KEY_ID');
-    const secretAccessKey = this.configService.get<string>('AWS_SECRET_ACCESS_KEY');
+    this.jwtSecret = this.configService.get<string>('JWT_SECRET') || 'MY_SECRET';
 
-    // 디버그용 로그 (개발 중에만 사용, 배포 전 제거)
-    console.log('AWS_ACCESS_KEY_ID:', accessKeyId);
-    console.log('AWS_SECRET_ACCESS_KEY:', secretAccessKey);
-    console.log('AWS_REGION:', region);
+    const accessKeyId = this.configService.get<string>('AWS_ACCESS_KEY_ID')!;
+    const secretAccessKey = this.configService.get<string>('AWS_SECRET_ACCESS_KEY')!;
 
-    // DynamoDB DocumentClient 초기화 (환경변수에서 받은 자격 증명 사용)
-    this.dynamoDb = new DynamoDB.DocumentClient({
+    // v3: DynamoDBClient + DocumentClient 래퍼
+    const client = new DynamoDBClient({
       region,
-      accessKeyId,
-      secretAccessKey,
+      credentials: { accessKeyId, secretAccessKey },
     });
+    this.db = DynamoDBDocumentClient.from(client);
   }
 
   // 회원가입: 학번, 비밀번호, 이름, 학과를 받아서 저장
@@ -49,12 +50,12 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser: User = { studentId, password: hashedPassword, name, department };
 
-    await this.dynamoDb
-      .put({
+    await this.db.send(
+      new PutCommand({
         TableName: this.tableName,
         Item: newUser,
-      })
-      .promise();
+      }),
+    );
 
     return { message: '회원가입 성공' };
   }
@@ -93,14 +94,14 @@ export class AuthService {
     }
     const newHashedPassword = await bcrypt.hash(newPassword, 10);
 
-    await this.dynamoDb.update({
-      TableName: this.tableName,
-      Key: { studentId },
-      UpdateExpression: 'set password = :p',
-      ExpressionAttributeValues: {
-        ':p': newHashedPassword,
-      },
-    }).promise();
+    await this.db.send(
+      new UpdateCommand({
+        TableName: this.tableName,
+        Key: { studentId },
+        UpdateExpression: 'SET password = :p',
+        ExpressionAttributeValues: { ':p': newHashedPassword },
+      }),
+    );
 
     return { message: '비밀번호 변경 성공' };
   }
@@ -115,15 +116,18 @@ export class AuthService {
     if (!isValid) {
       throw new UnauthorizedException('비밀번호가 올바르지 않습니다.');
     }
-    await this.dynamoDb.delete({
-      TableName: this.tableName,
-      Key: { studentId },
-    }).promise();
+
+    await this.db.send(
+      new DeleteCommand({
+        TableName: this.tableName,
+        Key: { studentId },
+      }),
+    );
 
     return { message: '회원 탈퇴 성공' };
   }
 
-  // 내 정보 조회: JWT를 통해 학번을 얻었다고 가정 (비밀번호 제외)
+  // 내 정보 조회: 비밀번호 제외
   async getMyInfo(studentId: string) {
     const user = await this.getUserByStudentId(studentId);
     if (!user) {
@@ -133,12 +137,14 @@ export class AuthService {
     return userInfo;
   }
 
-  // 학번으로 사용자 조회 (DynamoDB 'get' 사용)
-  async getUserByStudentId(studentId: string): Promise<User | null> {
-    const result = await this.dynamoDb.get({
-      TableName: this.tableName,
-      Key: { studentId },
-    }).promise();
+  // 학번으로 사용자 조회 (GetCommand)
+  private async getUserByStudentId(studentId: string): Promise<User | null> {
+    const result = await this.db.send(
+      new GetCommand({
+        TableName: this.tableName,
+        Key: { studentId },
+      }),
+    );
     return (result.Item as User) || null;
   }
 }
