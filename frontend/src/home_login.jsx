@@ -76,22 +76,6 @@ const Login = () => {
     }
   };
 
-  // 테스트용 로그인/로그아웃 토글 버튼 핸들러
-  const handleToggleLoginStatus = () => {
-    if (isLoggedIn) {
-      localStorage.removeItem('token');
-      setIsLoggedIn(false);
-    } else {
-      localStorage.setItem('token', 'dummy_token_for_testing');
-      setUserInfo({
-        name: '홍길동',
-        studentId: '20230001',
-        department: '컴퓨터공학과',
-      });
-      setIsLoggedIn(true);
-    }
-  };
-
   const UserInfoCard = () => (
     <div className="login-card">
       <div className="login-header">
@@ -170,18 +154,6 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      {/* 테스트용 토글 버튼 */}
-      <div className="test-controls">
-        <button
-          onClick={handleToggleLoginStatus}
-          className="test-toggle-button"
-        >
-          {isLoggedIn
-            ? '테스트: 로그아웃 상태로 전환'
-            : '테스트: 로그인 상태로 전환'}
-        </button>
-      </div>
-
       <div className="login-notice-wrapper">
         {isLoggedIn ? <UserInfoCard /> : <LoginForm />}
 
