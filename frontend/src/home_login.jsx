@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './Login.css';
+import './home_login.css';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [studentId, setStudentId] = useState('');
@@ -157,6 +158,12 @@ const Login = () => {
         <button type="submit" className="login-button" disabled={isLoading}>
           {isLoading ? '로그인 중...' : '로그인'}
         </button>
+
+        <Link to="/component/signup" className="signup-link">
+          <button type="button" className="signup-button">
+            회원가입
+          </button>
+        </Link>
       </form>
     </div>
   );
