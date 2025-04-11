@@ -1,5 +1,15 @@
-import { Controller, Post, Get, Patch, Delete, Body, Req, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Get,
+  Patch,
+  Delete,
+  Body,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { Request } from 'express';
+
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './jwt-auth.guard';
 
@@ -7,40 +17,70 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  // 회원가입: POST /auth/signup
+  // 회원가입: 누구나 접근 가능
+  // POST /auth/signup
   @Post('signup')
   async signUp(
-    @Body() body: { studentId: string; password: string; name: string; department: string },
+    @Body() body: {
+      studentId: string;
+      password: string;
+      name: string;
+      department: string;
+    },
   ) {
-    return this.authService.signUp(body.studentId, body.password, body.name, body.department);
+    return this.authService.signUp(
+      body.studentId,
+      body.password,
+      body.name,
+      body.department,
+    );
   }
 
-  // 로그인: POST /auth/login
+  // 로그인: 누구나 접근 가능
+  // POST /auth/login
   @Post('login')
   async login(@Body() body: { studentId: string; password: string }) {
     return this.authService.login(body.studentId, body.password);
   }
 
-  // 비밀번호 변경: PATCH /auth/password
+  // 비밀번호 변경: 로그인된 사용자만
+  // PATCH /auth/password
+  @UseGuards(JwtAuthGuard)
   @Patch('password')
   async changePassword(
-    @Body() body: { studentId: string; oldPassword: string; newPassword: string },
+    @Req() request: Request,
+    @Body() body: { oldpassword: string; newpassword: string },
   ) {
-    return this.authService.changePassword(body.studentId, body.oldPassword, body.newPassword);
+    // 토큰에서 studentId 꺼내기
+    const studentId = (request as any).user.studentId;
+    return this.authService.changePassword(
+      studentId,
+      body.oldpassword,
+      body.newpassword,
+    );
   }
 
-  // 회원 탈퇴: DELETE /auth/delete
+  // 회원 탈퇴: 로그인된 사용자만
+  // DELETE /auth/delete
+  @UseGuards(JwtAuthGuard)
   @Delete('delete')
-  async deleteUser(@Body() body: { studentId: string; password: string }) {
-    return this.authService.deleteUser(body.studentId, body.password);
+  async deleteUser(
+    @Req() request: Request,
+    @Body() body: { password: string },
+  ) {
+    const studentId = (request as any).user.studentId;
+    return this.authService.deleteUser(studentId, body.password);
   }
 
-  // 내 정보 조회: GET /auth/me
-  // JWT 인증 가드로 보호되어, Authorization 헤더에 Bearer 토큰을 포함해야 합니다.
+  // 내 정보 조회: 로그인된 사용자만
+  // GET /auth/me
   @UseGuards(JwtAuthGuard)
   @Get('me')
   getMyInfo(@Req() request: Request) {
-    // JwtAuthGuard에서 request.user에 토큰 payload를 넣어두었음
-    return { message: '내 정보 조회 성공', user: request['user'] };
+    const user = (request as any).user;
+    return {
+      message: '내 정보 조회 성공',
+      user,
+    };
   }
 }
