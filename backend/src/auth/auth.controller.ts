@@ -6,6 +6,7 @@ import {
   Delete,
   Body,
   Req,
+  Param,
   UseGuards,
 } from '@nestjs/common';
 import { Request } from 'express';
@@ -17,8 +18,7 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  // 회원가입: 누구나 접근 가능
-  // POST /auth/signup
+  // 회원가입: POST /auth/signup
   @Post('signup')
   async signUp(
     @Body() body: {
@@ -36,22 +36,19 @@ export class AuthController {
     );
   }
 
-  // 로그인: 누구나 접근 가능
-  // POST /auth/login
+  // 로그인: POST /auth/login
   @Post('login')
   async login(@Body() body: { studentId: string; password: string }) {
     return this.authService.login(body.studentId, body.password);
   }
 
-  // 비밀번호 변경: 로그인된 사용자만
-  // PATCH /auth/password
+  // 비밀번호 변경: PATCH /auth/password (인증 필요)
   @UseGuards(JwtAuthGuard)
   @Patch('password')
   async changePassword(
     @Req() request: Request,
     @Body() body: { oldpassword: string; newpassword: string },
   ) {
-    // 토큰에서 studentId 꺼내기
     const studentId = (request as any).user.studentId;
     return this.authService.changePassword(
       studentId,
@@ -60,8 +57,7 @@ export class AuthController {
     );
   }
 
-  // 회원 탈퇴: 로그인된 사용자만
-  // DELETE /auth/delete
+  // 회원 탈퇴: DELETE /auth/delete (인증 필요)
   @UseGuards(JwtAuthGuard)
   @Delete('delete')
   async deleteUser(
@@ -72,15 +68,17 @@ export class AuthController {
     return this.authService.deleteUser(studentId, body.password);
   }
 
-  // 내 정보 조회: 로그인된 사용자만
-  // GET /auth/me
+  // 내 정보 조회: GET /auth/me (인증 필요)
   @UseGuards(JwtAuthGuard)
   @Get('me')
-  getMyInfo(@Req() request: Request) {
-    const user = (request as any).user;
-    return {
-      message: '내 정보 조회 성공',
-      user,
-    };
+  async getMyInfo(@Req() request: Request) {
+    const studentId = (request as any).user.studentId;
+    return this.authService.getMyInfo(studentId);
+  }
+
+  // 공개 사용자 조회: GET /auth/user/:studentId
+  @Get('user/:studentId')
+  async findUser(@Param('studentId') studentId: string) {
+    return this.authService.findUser(studentId);
   }
 }
