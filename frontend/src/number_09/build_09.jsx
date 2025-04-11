@@ -7,20 +7,12 @@ const Build09 = () => {
   const [selectedFloor, setSelectedFloor] = useState(1);
   const navigate = useNavigate();
 
-  const floorPlans = {
-    1: '/09_1f.jpeg',
-    2: '/09_2f.jpeg',
-    3: '/09_3f.jpeg',
-    4: '/09_4f.jpeg',
-    5: '/09_5f.jpeg',
-  };
-
   const floorRoomNumbers = {
-    1: [1, 2, 13],
-    2: [21, 22],
-    3: [31, 32, 33, 34],
-    4: [41, 42, 25],
-    5: [51],
+    1: [6, 19],
+    2: [19],
+    3: [20, 27],
+    4: [8, 9, 10, 11, 20, 25],
+    5: [16, 17, 18, 19, 20, 22],
   };
 
   const handleFloorChange = (floor) => {
@@ -30,6 +22,8 @@ const Build09 = () => {
   const handleRoomClick = (roomId) => {
     if (selectedFloor === 4 && roomId === 25) {
       navigate(`/building/${buildingId}/room/090425`);
+    } else {
+      alert(`${selectedFloor}층 강의실 ${roomId} 정보는 준비 중입니다.`);
     }
   };
 
@@ -56,25 +50,17 @@ const Build09 = () => {
         ))}
       </div>
 
-      <div className="floor-and-buttons-wrapper">
-        <div className="floor-plan-container">
-          <div className="floor-plan">
-            <img
-              src={floorPlans[selectedFloor]}
-              alt={`${selectedFloor}층 도면`}
-              className="floor-plan-image"
-            />
-          </div>
-        </div>
-
-        <div className="additional-buttons-container">
+      <div className="rooms-container">
+        <h2>{selectedFloor}층 강의실</h2>
+        <div className="rooms-grid">
           {floorRoomNumbers[selectedFloor]?.map((roomId) => (
             <button
               key={roomId}
-              className="additional-button"
+              className="room-button"
               onClick={() => handleRoomClick(roomId)}
             >
               강의실 {roomId}
+              {selectedFloor === 4 && roomId === 25 && ' ✓'}
             </button>
           ))}
         </div>

@@ -6,11 +6,11 @@ import './signup.css';
 const Signup = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: '',
+    studentId: '',
     password: '',
     confirmPassword: '',
     name: '',
-    email: '',
+    department: '',
   });
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -36,10 +36,10 @@ const Signup = () => {
 
     try {
       const response = await axios.post('http://localhost:8080/auth/signup', {
-        username: formData.username,
+        studentId: formData.studentId,
         password: formData.password,
         name: formData.name,
-        email: formData.email,
+        department: formData.department,
       });
 
       alert('회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.');
@@ -66,16 +66,16 @@ const Signup = () => {
 
         <form onSubmit={handleSubmit} className="signup-form">
           <div className="form-field">
-            <label htmlFor="username">아이디</label>
+            <label htmlFor="studentId">학번</label>
             <div className="input-container">
               <i className="icon user-icon">👤</i>
               <input
                 type="text"
-                id="username"
-                name="username"
-                value={formData.username}
+                id="studentId"
+                name="studentId"
+                value={formData.studentId}
                 onChange={handleChange}
-                placeholder="아이디를 입력하세요."
+                placeholder="학번을 입력하세요."
                 required
               />
             </div>
@@ -130,16 +130,16 @@ const Signup = () => {
           </div>
 
           <div className="form-field">
-            <label htmlFor="email">이메일</label>
+            <label htmlFor="department">학과</label>
             <div className="input-container">
-              <i className="icon email-icon">✉️</i>
+              <i className="icon department-icon">🏫</i>
               <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
+                type="text"
+                id="department"
+                name="department"
+                value={formData.department}
                 onChange={handleChange}
-                placeholder="이메일을 입력하세요."
+                placeholder="학과를 입력하세요."
                 required
               />
             </div>

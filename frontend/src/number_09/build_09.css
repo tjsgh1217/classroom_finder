@@ -61,80 +61,45 @@
   border-color: #8885e8;
 }
 
-.floor-and-buttons-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 40px;
-  flex-wrap: wrap;
-  width: 100%;
+.rooms-container {
+  margin-top: 100px;
+  text-align: left;
 }
 
-.floor-plan-container {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.rooms-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 24px;
 }
 
-.floor-plan {
-  position: relative;
-  border: 1px solid #dee2e6;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 80%;
-  max-width: 800px;
+.rooms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  margin-top: 100px;
 }
 
-.floor-plan-image {
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-}
-
-.room-marker {
-  position: absolute;
-  background-color: rgba(136, 133, 232, 0.8);
-  color: white;
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s, background-color 0.2s;
-  z-index: 10;
-}
-
-.room-marker:hover {
-  transform: scale(1.1);
-  background-color: rgba(136, 133, 232, 1);
-}
-
-.additional-buttons-container {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 10px;
-}
-
-.additional-button {
-  padding: 10px 20px;
-  background-color: #8885e8;
+.room-button {
+  padding: 15px 20px;
+  background-color: #a3a1ea;
   border: none;
   border-radius: 8px;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.additional-button:hover {
+.room-button:hover {
   background-color: #6c63d8;
-  transform: translateX(4px);
+  transform: translateY(-3px);
 }
 
 @media (max-width: 768px) {
@@ -151,19 +116,14 @@
     font-size: 24px;
   }
 
-  .floor-and-buttons-wrapper {
-    flex-direction: column;
-    align-items: center;
+  .rooms-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
   }
 
-  .additional-buttons-container {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .additional-button {
-    padding: 6px 12px;
-    font-size: 13px;
+  .room-button {
+    padding: 12px 15px;
+    font-size: 14px;
+    height: 80px;
   }
 }

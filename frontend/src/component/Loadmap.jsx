@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './loadmap.css';
+import './Loadmap.css';
 
 const Loadmap = () => {
   const navigate = useNavigate();

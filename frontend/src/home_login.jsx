@@ -1,191 +1,185 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './home_login.css';
-import { Link } from 'react-router-dom';
 
-const Login = () => {
+const UserInfoCard = ({ user }) => (
+  <div className="login-card">
+    <div className="login-header">
+      <h1 className="login-title">내 정보</h1>
+    </div>
+    <div className="user-info-content">
+      <div className="user-info-item">
+        <div className="user-info-details">
+          <h3>{user.name}</h3>
+          <p>학번: {user.studentId}</p>
+          <p>학과: {user.department}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const LoginForm = ({
+  studentId,
+  password,
+  error,
+  isLoading,
+  setStudentId,
+  setPassword,
+  handleLogin,
+}) => (
+  <div className="login-card">
+    <div className="login-header">
+      <h1 className="login-title">빈 강의실 서비스</h1>
+    </div>
+    {error && <div className="login-error">{error}</div>}
+
+    <form onSubmit={handleLogin} className="login-form">
+      <div className="form-field">
+        <label htmlFor="studentId">Student ID</label>
+        <div className="input-container">
+          <i className="icon user-icon">👤</i>
+          <input
+            type="text"
+            id="studentId"
+            value={studentId}
+            onChange={(e) => setStudentId(e.target.value)}
+            placeholder="학번을 입력하세요."
+            required
+          />
+        </div>
+      </div>
+
+      <div className="form-field">
+        <label htmlFor="password">Password</label>
+        <div className="input-container">
+          <i className="icon lock-icon">🔒</i>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="비밀번호를 입력하세요."
+            required
+          />
+        </div>
+      </div>
+
+      <button type="submit" className="login-button" disabled={isLoading}>
+        {isLoading ? '로그인 중...' : '로그인'}
+      </button>
+    </form>
+  </div>
+);
+
+const Login = ({ isLoggedIn, setIsLoggedIn }) => {
   const [studentId, setStudentId] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userInfo, setUserInfo] = useState({
-    name: '홍길동',
-    studentId: '20230001',
-    department: '컴퓨터공학과',
-  });
+  const [user, setUser] = useState({ name: '', studentId: '', department: '' });
 
-  useEffect(() => {
-    const checkLoginStatus = async () => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        try {
-          const response = await axios.get('http://localhost:8080/auth/me', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          setUserInfo({
-            name: response.data.name,
-            studentId: response.data.studentId,
-            department: response.data.department,
-          });
-          setIsLoggedIn(true);
-        } catch (err) {
-          console.error('인증 오류:', err);
-          localStorage.removeItem('token');
-          setIsLoggedIn(false);
-        }
-      }
-    };
-
-    checkLoginStatus();
-  }, []);
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-
+  const fetchUserInfo = async (token) => {
     try {
-      const response = await axios.post('http://localhost:8080/auth/login', {
-        studentId,
-        password,
+      const res = await axios.get('http://localhost:8080/auth/me', {
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
       });
 
-      localStorage.setItem('token', response.data.access_token);
+      console.log('User info response:', res.data);
 
-      const userResponse = await axios.get('http://localhost:8080/auth/me', {
-        headers: {
-          Authorization: `Bearer ${response.data.access_token}`,
-        },
+      const userInfo = res.data.user;
+
+      setUser({
+        name: userInfo.name,
+        studentId: userInfo.studentId,
+        department: userInfo.department,
       });
-
-      setUserInfo({
-        name: userResponse.data.name,
-        studentId: userResponse.data.studentId,
-        department: userResponse.data.department,
-      });
-
       setIsLoggedIn(true);
     } catch (err) {
-      setError('로그인에 실패했습니다. 학번과 비밀번호를 확인해주세요.');
-      console.error('로그인 오류:', err);
-    } finally {
-      setIsLoading(false);
+      console.error('인증 실패:', err);
+
+      if (err.response) {
+        console.error('Error response:', err.response.data);
+        console.error('Status:', err.response.status);
+      }
+      localStorage.removeItem('token');
+      setIsLoggedIn(false);
     }
   };
 
-  const UserInfoCard = () => (
-    <div className="login-card">
-      <div className="login-header">
-        <h1 className="login-title">내 정보</h1>
-      </div>
-      <div className="user-info-content">
-        <div className="user-info-item">
-          <div className="user-info-details">
-            <h3>{userInfo.name}</h3>
-            <p>학번: {userInfo.studentId}</p>
-            <p>학과: {userInfo.department}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) fetchUserInfo(token);
+  }, [setIsLoggedIn]);
 
-  const LoginForm = () => (
-    <div className="login-card">
-      <div className="login-header">
-        <h1 className="login-title">빈 강의실 서비스</h1>
-      </div>
+  const handleLogin = useCallback(
+    async (e) => {
+      e.preventDefault();
+      setIsLoading(true);
+      setError('');
 
-      {error && <div className="login-error">{error}</div>}
+      try {
+        const res = await axios.post('http://localhost:8080/auth/login', {
+          studentId,
+          password,
+        });
 
-      <form onSubmit={handleLogin} className="login-form">
-        <div className="form-field">
-          <label htmlFor="studentId">Student ID</label>
-          <div className="input-container">
-            <i className="icon user-icon">👤</i>
-            <input
-              type="text"
-              id="studentId"
-              value={studentId}
-              onChange={(e) => setStudentId(e.target.value)}
-              placeholder="Enter your student ID"
-              required
-            />
-          </div>
-        </div>
+        const token = res.data.accessToken;
 
-        <div className="form-field">
-          <div className="password-label-row">
-            <label htmlFor="password">Password</label>
-          </div>
-          <div className="input-container">
-            <i className="icon lock-icon">🔒</i>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              required
-            />
-          </div>
-        </div>
+        localStorage.setItem('token', token);
 
-        <div className="remember-me">
-          <input type="checkbox" id="remember" />
-          <label htmlFor="remember">자동 완성</label>
-        </div>
-
-        <button type="submit" className="login-button" disabled={isLoading}>
-          {isLoading ? '로그인 중...' : '로그인'}
-        </button>
-
-        <Link to="/component/signup" className="signup-link">
-          <button type="button" className="signup-button">
-            회원가입
-          </button>
-        </Link>
-      </form>
-    </div>
+        await fetchUserInfo(token);
+      } catch (err) {
+        setError('로그인에 실패했습니다. 학번과 비밀번호를 확인해주세요.');
+        console.error('로그인 오류:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [studentId, password, setIsLoggedIn]
   );
 
   return (
     <div className="login-container">
       <div className="login-notice-wrapper">
-        {isLoggedIn ? <UserInfoCard /> : <LoginForm />}
+        {isLoggedIn ? (
+          <UserInfoCard user={user} />
+        ) : (
+          <LoginForm
+            studentId={studentId}
+            password={password}
+            error={error}
+            isLoading={isLoading}
+            setStudentId={setStudentId}
+            setPassword={setPassword}
+            handleLogin={handleLogin}
+          />
+        )}
 
         <div className="notice-card">
           <div className="notice-header">
-            <div className="notice-title-container">
-              <h1 className="notice-title">공지사항</h1>
-              <img
-                src="/HNU_logo.png"
-                alt="학교 로고"
-                className="school-logo"
-              />
-            </div>
+            <h1 className="notice-title">공지사항</h1>
           </div>
-
           <div className="notice-content">
             <div className="notice-item">
               <h3>25.04.04 시간표 업데이트</h3>
               <p>11번 건물 강의실 시간표 업데이트 완료</p>
-              <p>06번 건물 강의실 시간표 업데이트 완료</p>
-              <p>56번 건물 강의실 시간표 업데이트 완료</p>
               <span className="notice-date">2025.04.04</span>
             </div>
             <div className="notice-item">
-              <h3>사용 불가 강의실 안내</h3>
-              <p>4.4부터 5.30까지 090320 강의실 사용 불가</p>
-              <span className="notice-date">2025.04.03</span>
+              <h3>25.04.04 시간표 업데이트</h3>
+              <p>11번 건물 강의실 시간표 업데이트 완료</p>
+              <p>11번 건물 강의실 시간표 업데이트 완료</p>
+              <p>11번 건물 강의실 시간표 업데이트 완료</p>
+              <p>11번 건물 강의실 시간표 업데이트 완료</p>
+              <p>11번 건물 강의실 시간표 업데이트 완료</p>
+              <span className="notice-date">2025.04.04</span>
             </div>
             <div className="notice-item">
-              <h3>강의시간표 변경 안내</h3>
-              <p>060403 강의실 시간표가 변경되었습니다.</p>
-              <span className="notice-date">2025.04.02</span>
+              <h3>25.04.04 시간표 업데이트</h3>
+              <p>11번 건물 강의실 시간표 업데이트 완료</p>
+              <span className="notice-date">2025.04.04</span>
             </div>
           </div>
         </div>
