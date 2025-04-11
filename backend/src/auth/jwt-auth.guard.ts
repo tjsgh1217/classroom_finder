@@ -1,4 +1,9 @@
-import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as jwt from 'jsonwebtoken';
 import { Observable } from 'rxjs';
@@ -7,7 +12,9 @@ import { Observable } from 'rxjs';
 export class JwtAuthGuard implements CanActivate {
   constructor(private configService: ConfigService) {}
 
-  canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
+  canActivate(
+    context: ExecutionContext,
+  ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
     const authHeader = request.headers['authorization'];
     if (!authHeader) {
@@ -20,12 +27,12 @@ export class JwtAuthGuard implements CanActivate {
     const token = parts[1];
 
     try {
-      const jwtSecret = this.configService.get<string>('JWT_SECRET') || 'MY_SECRET';
+      const jwtSecret =
+        this.configService.get<string>('JWT_SECRET') || 'MY_SECRET';
       const decoded = jwt.verify(token, jwtSecret);
-      // decoded에는 토큰 payload가 들어있음 (예: { studentId, name, iat, exp } 등)
-      request.user = decoded;  // 요청 객체에 사용자 정보를 저장합니다.
+      request.user = decoded; // req.user 에 페이로드 저장
       return true;
-    } catch (error) {
+    } catch (err) {
       throw new UnauthorizedException('유효하지 않은 토큰입니다.');
     }
   }
