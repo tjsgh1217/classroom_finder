@@ -33,6 +33,9 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
             <Link to="/loadmap" className="header__button">
               캠퍼스 맵
             </Link>
+            <Link to="/component/mypage" className="header__button">
+              회원정보
+            </Link>
             <button onClick={handleLogout} className="header__button">
               로그아웃
             </button>

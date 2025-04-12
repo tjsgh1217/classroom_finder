@@ -132,3 +132,18 @@
   color: #3367d6;
   text-decoration: underline;
 }
+.field-error {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 5px;
+  padding-left: 5px;
+}
+
+.signup-error {
+  background-color: #ffebee;
+  color: #e53935;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  text-align: center;
+}

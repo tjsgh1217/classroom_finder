@@ -12,7 +12,14 @@ const Signup = () => {
     name: '',
     department: '',
   });
-  const [error, setError] = useState('');
+  const [errors, setErrors] = useState({
+    studentId: '',
+    password: '',
+    confirmPassword: '',
+    name: '',
+    department: '',
+    general: '',
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -21,18 +28,57 @@ const Signup = () => {
       ...formData,
       [name]: value,
     });
+
+    if (errors[name]) {
+      setErrors({
+        ...errors,
+        [name]: '',
+      });
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    let isValid = true;
+
+    if (!/^\d{8}$/.test(formData.studentId)) {
+      newErrors.studentId = '학번은 8자리 숫자여야 합니다.';
+      isValid = false;
+    }
+
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(formData.password)) {
+      newErrors.password = '비밀번호는 특수문자를 포함해야 합니다.';
+      isValid = false;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = '비밀번호가 일치하지 않습니다.';
+      isValid = false;
+    }
+
+    if (!formData.name.trim()) {
+      newErrors.name = '이름을 입력해주세요.';
+      isValid = false;
+    }
+
+    if (!formData.department.trim()) {
+      newErrors.department = '학과를 입력해주세요.';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
-      setError('비밀번호가 일치하지 않습니다.');
+    if (!validateForm()) {
       return;
     }
 
     setIsLoading(true);
-    setError('');
+    setErrors({ ...errors, general: '' });
 
     try {
       const response = await axios.post('http://localhost:8080/auth/signup', {
@@ -46,10 +92,12 @@ const Signup = () => {
       navigate('/');
     } catch (err) {
       console.error('회원가입 오류:', err);
-      setError(
-        err.response?.data?.message ||
-          '회원가입에 실패했습니다. 다시 시도해주세요.'
-      );
+      setErrors({
+        ...errors,
+        general:
+          err.response?.data?.message ||
+          '회원가입에 실패했습니다. 다시 시도해주세요.',
+      });
     } finally {
       setIsLoading(false);
     }
@@ -62,7 +110,7 @@ const Signup = () => {
           <h1 className="signup-title">회원가입</h1>
         </div>
 
-        {error && <div className="signup-error">{error}</div>}
+        {errors.general && <div className="signup-error">{errors.general}</div>}
 
         <form onSubmit={handleSubmit} className="signup-form">
           <div className="form-field">
@@ -79,6 +127,9 @@ const Signup = () => {
                 required
               />
             </div>
+            {errors.studentId && (
+              <div className="field-error">{errors.studentId}</div>
+            )}
           </div>
 
           <div className="form-field">
@@ -95,6 +146,9 @@ const Signup = () => {
                 required
               />
             </div>
+            {errors.password && (
+              <div className="field-error">{errors.password}</div>
+            )}
           </div>
 
           <div className="form-field">
@@ -111,6 +165,9 @@ const Signup = () => {
                 required
               />
             </div>
+            {errors.confirmPassword && (
+              <div className="field-error">{errors.confirmPassword}</div>
+            )}
           </div>
 
           <div className="form-field">
@@ -127,6 +184,7 @@ const Signup = () => {
                 required
               />
             </div>
+            {errors.name && <div className="field-error">{errors.name}</div>}
           </div>
 
           <div className="form-field">
@@ -143,6 +201,9 @@ const Signup = () => {
                 required
               />
             </div>
+            {errors.department && (
+              <div className="field-error">{errors.department}</div>
+            )}
           </div>
 
           <button

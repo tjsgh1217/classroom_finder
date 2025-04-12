@@ -62,7 +62,7 @@ const Build09 = () => {
   return (
     <div className="building-detail-container">
       <div className="building-header">
-        <h1>{buildingId}번 건물</h1>
+        <h1>{buildingId}번 건물 - 공과대학</h1>
         <button className="back-button" onClick={() => navigate('/loadmap')}>
           돌아가기
         </button>

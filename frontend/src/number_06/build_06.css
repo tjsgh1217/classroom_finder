@@ -1,0 +1,129 @@
+.building-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.building-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.building-header h1 {
+  margin: 0;
+  color: #333;
+  font-size: 28px;
+}
+
+.back-button {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover {
+  background-color: #5a6268;
+}
+
+.floor-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.floor-button {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.floor-button:hover {
+  background-color: #e9ecef;
+}
+
+.floor-button.active {
+  background-color: #8885e8;
+  color: white;
+  border-color: #8885e8;
+}
+
+.rooms-container {
+  margin-top: 100px;
+  text-align: left;
+}
+
+.rooms-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 24px;
+}
+
+.rooms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  margin-top: 100px;
+}
+
+.room-button {
+  padding: 15px 20px;
+  background-color: #a3a1ea;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.room-button:hover {
+  background-color: #6c63d8;
+  transform: translateY(-3px);
+}
+
+@media (max-width: 768px) {
+  .floor-buttons {
+    flex-wrap: wrap;
+  }
+
+  .floor-button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .building-header h1 {
+    font-size: 24px;
+  }
+
+  .rooms-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+  }
+
+  .room-button {
+    padding: 12px 15px;
+    font-size: 14px;
+    height: 80px;
+  }
+}
