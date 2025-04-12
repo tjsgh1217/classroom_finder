@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './room090425.css';
+import '../room_style.css';
 
-const ClassRoom09_04_25 = () => {
+const ClassRoom = () => {
   const { roomId } = useParams();
   const navigate = useNavigate();
   const [selectedDay, setSelectedDay] = useState('월');
@@ -92,8 +92,9 @@ const ClassRoom09_04_25 = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          'http://localhost:8080/courses?room=090425-0'
+          `http://localhost:8080/courses?room=${roomId}-0`
         );
+
         const courseData = response.data;
 
         const lecturesByDay = {};
@@ -221,7 +222,16 @@ const ClassRoom09_04_25 = () => {
     }
 
     return days.map((day) => {
-      const dayLectures = lectures[day] || [];
+      let dayLectures = lectures[day] || [];
+
+      dayLectures = [...dayLectures].sort((a, b) => {
+        const timeToMinutes = (timeStr) => {
+          const [hours, minutes] = timeStr.split(':').map(Number);
+          return hours * 60 + minutes;
+        };
+
+        return timeToMinutes(a.start) - timeToMinutes(b.start);
+      });
 
       return (
         <div key={day} className="day-lecture-group">
@@ -232,7 +242,7 @@ const ClassRoom09_04_25 = () => {
             <ul className="lecture-list">
               {dayLectures.map((lecture, index) => (
                 <li key={index}>
-                  {lecture.start}~{lecture.end} {lecture.title}
+                  {lecture.start} ~ {lecture.end} &nbsp; &nbsp;{lecture.title}
                 </li>
               ))}
             </ul>
@@ -241,6 +251,7 @@ const ClassRoom09_04_25 = () => {
       );
     });
   };
+
   return (
     <div className="classroom-schedule-container">
       <div className="classroom-header">
@@ -265,4 +276,4 @@ const ClassRoom09_04_25 = () => {
   );
 };
 
-export default ClassRoom09_04_25;
+export default ClassRoom;

@@ -11,11 +11,11 @@ const Loadmap = () => {
 
   return (
     <div className="loadmap">
-      <img src="/campusMap.png" alt="Campus Map" className="loadmap__image" />
+      <img src="/campusMap.jpg" alt="Campus Map" className="loadmap__image" />
 
       <button
         className="loadmap__building"
-        style={{ top: '5.5%', left: '48.5%' }}
+        style={{ top: '10.5%', left: '44.5%' }}
         onClick={() => handleBuildingClick(9)}
       >
         09

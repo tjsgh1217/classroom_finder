@@ -31,7 +31,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
         {isLoggedIn ? (
           <>
             <Link to="/loadmap" className="header__button">
-              로드맵
+              캠퍼스 맵
             </Link>
             <button onClick={handleLogout} className="header__button">
               로그아웃

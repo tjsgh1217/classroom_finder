@@ -206,7 +206,8 @@
   gap: 15px;
   padding: 10px;
   border-radius: 8px;
-  background-color: #f8f9fa;
+  background-color: #f0e9f4;
+  padding: 80px;
 }
 
 .user-info-details {
@@ -215,15 +216,14 @@
 
 .user-info-details h3 {
   margin: 0 0 5px 0;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   color: #333;
-  margin-top: 10px;
   text-align: center;
 }
 
 .user-info-details p {
   margin: 0;
-  color: #666;
+  font-size: 1.3rem;
   margin-top: 30px;
   text-align: center;
   margin-bottom: 10px;
