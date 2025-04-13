@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import './build_02.css';
+import '../component/build.css';
 
 const Build02 = () => {
   const { buildingId } = useParams();
@@ -8,66 +8,89 @@ const Build02 = () => {
   const navigate = useNavigate();
 
   const floorRoomNumbers = {
-    1: [2],
-    2: [],
-    3: [],
-    4: [],
-    5: [],
-    6: [1, 3],
-    7: [],
-    8: [],
+    1: [6, 19],
+    2: [19],
+    3: [20, 27],
+    4: [8, 9, 10, 11, 20, 25],
+    5: [16, 17, 18, 19, 20, 22],
   };
+
+  const availableRooms = ['020106'];
 
   const handleFloorChange = (floor) => {
     setSelectedFloor(floor);
   };
 
   const handleRoomClick = (roomId) => {
-    if (selectedFloor === 4 && roomId === 25) {
-      navigate(`/building/${buildingId}/room/090425`);
-    } else if (selectedFloor === 1 && roomId === 6) {
-      navigate(`/building/${buildingId}/room/090522`);
+    const roomCode = `02${String(selectedFloor).padStart(2, '0')}${String(
+      roomId
+    ).padStart(2, '0')}`;
+
+    if (availableRooms.includes(roomCode)) {
+      navigate(`/building/${buildingId}/room/${roomCode}`);
     } else {
       alert(`${selectedFloor}층 강의실 ${roomId} 정보는 준비 중입니다.`);
     }
   };
 
   return (
-    <div className="building-detail-container">
-      <div className="building-header">
-        <h1>{buildingId}번 건물 - 탈메이지기념관</h1>
-        <button className="back-button" onClick={() => navigate('/loadmap')}>
-          돌아가기
-        </button>
-      </div>
+    <div className="building-container">
+      <div className="top-gradient"></div>
 
-      <div className="floor-buttons">
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((floor) => (
-          <button
-            key={floor}
-            className={`floor-button ${
-              selectedFloor === floor ? 'active' : ''
-            }`}
-            onClick={() => handleFloorChange(floor)}
-          >
-            {floor}층
-          </button>
-        ))}
-      </div>
+      <header className="building-header">
+        <div className="header-content">
+          <h1>{buildingId}번 건물 - 탈메이지기념관</h1>
+        </div>
+      </header>
 
-      <div className="rooms-container">
-        <h2>{selectedFloor}층 강의실</h2>
+      <div className="content-wrapper">
+        <div className="floor-selector">
+          <div className="floor-buttons">
+            {[1, 2, 3, 4, 5].map((floor) => (
+              <button
+                key={floor}
+                className={`floor-button ${
+                  selectedFloor === floor ? 'active' : ''
+                }`}
+                onClick={() => handleFloorChange(floor)}
+              >
+                {floor}F
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="floor-info">
+          <h2>{selectedFloor}층 강의실</h2>
+          <p className="floor-description">이용 가능한 강의실 목록입니다</p>
+        </div>
+
         <div className="rooms-grid">
-          {floorRoomNumbers[selectedFloor]?.map((roomId) => (
-            <button
-              key={roomId}
-              className="room-button"
-              onClick={() => handleRoomClick(roomId)}
-            >
-              강의실 {roomId}
-              {selectedFloor === 4 && roomId === 25 && ' ✓'}
-            </button>
-          ))}
+          {floorRoomNumbers[selectedFloor]?.map((roomId) => {
+            const roomCode = `02${String(selectedFloor).padStart(
+              2,
+              '0'
+            )}${String(roomId).padStart(2, '0')}`;
+            const isAvailable = availableRooms.includes(roomCode);
+
+            return (
+              <div
+                key={roomId}
+                className={`room-card ${isAvailable ? '' : 'unavailable-room'}`}
+                onClick={() => handleRoomClick(roomId)}
+              >
+                <div className="room-number">{roomId}</div>
+                <div className="room-name">강의실 {roomId}</div>
+                <div
+                  className={`room-status ${
+                    isAvailable ? 'available' : 'unavailable'
+                  }`}
+                >
+                  {isAvailable ? '정보 있음' : '정보 없음'}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
