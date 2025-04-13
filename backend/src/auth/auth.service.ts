@@ -111,7 +111,7 @@ export class AuthService {
       );
     }
     const token = jwt.sign({ studentId, name: user.name }, this.jwtSecret, {
-      expiresIn: '1h',
+      expiresIn: '3h',
     });
     return {
       message: '로그인 성공',

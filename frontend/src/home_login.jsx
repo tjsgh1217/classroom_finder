@@ -42,6 +42,7 @@ const LoginForm = ({
           <input
             type="text"
             id="studentId"
+            autoComplete="current-studentId"
             value={studentId}
             onChange={(e) => setStudentId(e.target.value)}
             placeholder="학번을 입력하세요."
@@ -57,6 +58,7 @@ const LoginForm = ({
           <input
             type="password"
             id="password"
+            autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="비밀번호를 입력하세요."
@@ -85,8 +87,6 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
       });
-
-      console.log('User info response:', res.data);
 
       const userInfo = res.data.user;
 

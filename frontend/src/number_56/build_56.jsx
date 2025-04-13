@@ -80,7 +80,11 @@ const Build56 = () => {
                 onClick={() => handleRoomClick(roomId)}
               >
                 <div className="room-number">{roomId}</div>
-                <div className="room-name">강의실 {roomId}</div>
+                <div className="room-name">
+                  {`56${String(selectedFloor).padStart(2, '0')}${String(
+                    roomId
+                  ).padStart(2, '0')}`}
+                </div>
                 <div
                   className={`room-status ${
                     isAvailable ? 'available' : 'unavailable'

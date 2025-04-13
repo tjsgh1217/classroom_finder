@@ -1,5 +1,11 @@
-import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useParams,
+  useNavigate,
+} from 'react-router-dom';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 import Login from './home_login';
 import Header from './component/head';
 import Loadmap from './component/Loadmap';
@@ -73,17 +79,79 @@ function BuildingRouter() {
   if (buildingId === '3') return <Build03 />;
   if (buildingId === '26') return <Build26 />;
 }
+const AuthContext = createContext();
 
-function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
+function isTokenExpired(token) {
+  if (!token) return true;
+
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const payload = JSON.parse(window.atob(base64));
+
+    return payload.exp * 1000 < Date.now();
+  } catch (e) {
+    return true;
+  }
+}
+
+function AuthProvider({ children }) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token);
-  }, []);
+    const checkTokenValidity = () => {
+      const token = localStorage.getItem('token');
+
+      if (!token || isTokenExpired(token)) {
+        if (isLoggedIn) {
+          localStorage.removeItem('token');
+          setIsLoggedIn(false);
+          navigate('/');
+          alert('로그인이 만료되었습니다. 다시 로그인해주세요.');
+        }
+      } else {
+        setIsLoggedIn(true);
+      }
+    };
+
+    checkTokenValidity();
+
+    const intervalId = setInterval(checkTokenValidity, 60000);
+
+    return () => clearInterval(intervalId);
+  }, [isLoggedIn, navigate]);
 
   return (
-    <BrowserRouter>
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+function useAuth() {
+  return useContext(AuthContext);
+}
+
+function ProtectedRoute({ element }) {
+  const { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/');
+      alert('로그인이 필요한 페이지입니다.');
+    }
+  }, [isLoggedIn, navigate]);
+
+  return isLoggedIn ? element : null;
+}
+
+function AppRoutes() {
+  const { isLoggedIn, setIsLoggedIn } = useAuth();
+
+  return (
+    <>
       <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Routes>
         <Route
@@ -92,16 +160,35 @@ function App() {
             <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
           }
         />
-        <Route path="/loadmap" element={<Loadmap />} />
+        <Route
+          path="/loadmap"
+          element={<ProtectedRoute element={<Loadmap />} />}
+        />
         <Route path="/component/signup" element={<Signup />} />
-        <Route path="/component/mypage" element={<Mypage />} />
+        <Route
+          path="/component/mypage"
+          element={<ProtectedRoute element={<Mypage />} />}
+        />
 
-        <Route path="/building/:buildingId" element={<BuildingRouter />} />
+        <Route
+          path="/building/:buildingId"
+          element={<ProtectedRoute element={<BuildingRouter />} />}
+        />
         <Route
           path="/building/:buildingId/room/:roomId"
-          element={<RoomRouter />}
+          element={<ProtectedRoute element={<RoomRouter />} />}
         />
       </Routes>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <AppRoutes />
+      </AuthProvider>
     </BrowserRouter>
   );
 }

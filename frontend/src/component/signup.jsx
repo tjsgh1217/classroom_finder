@@ -122,6 +122,7 @@ const Signup = () => {
                 type="text"
                 id="studentId"
                 name="studentId"
+                autoComplete="current-studentId"
                 value={formData.studentId}
                 onChange={handleChange}
                 placeholder="학번을 입력하세요."
@@ -141,6 +142,7 @@ const Signup = () => {
                 type="password"
                 id="password"
                 name="password"
+                autoComplete="new-password"
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="비밀번호를 입력하세요."
@@ -160,6 +162,7 @@ const Signup = () => {
                 type="password"
                 id="confirmPassword"
                 name="confirmPassword"
+                autoComplete="confirmPassword-password"
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 placeholder="비밀번호를 다시 입력하세요."
@@ -179,6 +182,7 @@ const Signup = () => {
                 type="text"
                 id="name"
                 name="name"
+                autoComplete="username"
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="이름을 입력하세요."
