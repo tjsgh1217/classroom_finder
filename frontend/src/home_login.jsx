@@ -3,16 +3,25 @@ import axios from 'axios';
 import './home_login.css';
 
 const UserInfoCard = ({ user }) => (
-  <div className="login-card">
+  <div className="login-card user-profile-card">
     <div className="login-header">
       <h1 className="login-title">내 정보</h1>
     </div>
     <div className="user-info-content">
+      <div className="user-avatar">
+        <span className="avatar-text">{user.name.charAt(0)}</span>
+      </div>
       <div className="user-info-item">
         <div className="user-info-details">
           <h3>{user.name}</h3>
-          <p>학번: {user.studentId}</p>
-          <p>학과: {user.department}</p>
+          <div className="info-chip">
+            <i className="info-icon">🎓</i>
+            <p>학번: {user.studentId}</p>
+          </div>
+          <div className="info-chip">
+            <i className="info-icon">🏢</i>
+            <p>학과: {user.department}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -38,7 +47,6 @@ const LoginForm = ({
       <div className="form-field">
         <label htmlFor="studentId">Student ID</label>
         <div className="input-container">
-          <i className="icon user-icon">👤</i>
           <input
             type="text"
             id="studentId"
@@ -54,7 +62,6 @@ const LoginForm = ({
       <div className="form-field">
         <label htmlFor="password">Password</label>
         <div className="input-container">
-          <i className="icon lock-icon">🔒</i>
           <input
             type="password"
             id="password"

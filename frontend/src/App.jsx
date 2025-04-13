@@ -80,7 +80,9 @@ function BuildingRouter() {
   if (buildingId === '26') return <Build26 />;
 }
 const AuthContext = createContext();
-
+function useAuth() {
+  return useContext(AuthContext);
+}
 function isTokenExpired(token) {
   if (!token) return true;
 
@@ -97,6 +99,7 @@ function isTokenExpired(token) {
 
 function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -104,47 +107,39 @@ function AuthProvider({ children }) {
       const token = localStorage.getItem('token');
 
       if (!token || isTokenExpired(token)) {
-        if (isLoggedIn) {
-          localStorage.removeItem('token');
-          setIsLoggedIn(false);
-          navigate('/');
-          alert('로그인이 만료되었습니다. 다시 로그인해주세요.');
-        }
+        localStorage.removeItem('token');
+        setIsLoggedIn(false);
       } else {
         setIsLoggedIn(true);
       }
+      setIsLoading(false);
     };
 
     checkTokenValidity();
 
     const intervalId = setInterval(checkTokenValidity, 60000);
-
     return () => clearInterval(intervalId);
-  }, [isLoggedIn, navigate]);
+  }, [navigate]);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, isLoading }}>
       {children}
     </AuthContext.Provider>
   );
 }
 
-function useAuth() {
-  return useContext(AuthContext);
-}
-
 function ProtectedRoute({ element }) {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, isLoading } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!isLoading && !isLoggedIn) {
       navigate('/');
       alert('로그인이 필요한 페이지입니다.');
     }
-  }, [isLoggedIn, navigate]);
+  }, [isLoggedIn, isLoading, navigate]);
 
-  return isLoggedIn ? element : null;
+  return isLoading ? <div>로딩 중...</div> : isLoggedIn ? element : null;
 }
 
 function AppRoutes() {

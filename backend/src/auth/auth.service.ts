@@ -131,9 +131,15 @@ export class AuthService {
   ) {
     const user = await this.getUser(studentId);
     if (!user) throw new NotFoundException('사용자를 찾을 수 없습니다.');
+
     if (!(await bcrypt.compare(oldPassword, user.password))) {
       throw new UnauthorizedException('기존 비밀번호가 일치하지 않습니다.');
     }
+
+    if (!this.validatePassword(newPassword)) {
+      throw new BadRequestException('비밀번호는 특수문자를 포함해야 합니다.');
+    }
+
     const hashed = await bcrypt.hash(newPassword, 10);
     await this.db.send(
       new UpdateCommand({
