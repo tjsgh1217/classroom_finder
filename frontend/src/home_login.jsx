@@ -111,6 +111,7 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) fetchUserInfo(token);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setIsLoggedIn]);
 
   const handleLogin = useCallback(
@@ -137,6 +138,7 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
         setIsLoading(false);
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [studentId, password, setIsLoggedIn]
   );
 

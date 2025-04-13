@@ -81,6 +81,7 @@ const Signup = () => {
     setErrors({ ...errors, general: '' });
 
     try {
+      // eslint-disable-next-line no-unused-vars
       const response = await axios.post('http://localhost:8080/auth/signup', {
         studentId: formData.studentId,
         password: formData.password,

@@ -125,6 +125,7 @@ const ClassRoom = () => {
     };
 
     fetchLectureData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const renderTimeTableGrid = () => {
     if (loading) {
