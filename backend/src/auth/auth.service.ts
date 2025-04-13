@@ -22,7 +22,6 @@ interface User {
   password: string;
   name: string;
   department: string;
-  createdAt?: string;
 }
 
 @Injectable()
@@ -84,7 +83,6 @@ export class AuthService {
       password: hashed,
       name,
       department,
-      createdAt: new Date().toISOString(),
     };
 
     await this.db.send(

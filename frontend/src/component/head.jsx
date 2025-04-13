@@ -18,36 +18,34 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
 
   return (
     <header className="header">
-      <div className="header__logo">
-        <Link to="/" className="header__logo-link">
+      <div className="header__container">
+        <Link to="/" className="header__logo">
           <img
             src="/service_logo.png"
             alt="공강룸 로고"
             className="header__logo-img"
           />
         </Link>
-      </div>
-      <nav className="header__nav">
-        {isLoggedIn ? (
-          <>
-            <Link to="/loadmap" className="header__button">
-              캠퍼스 맵
-            </Link>
-            <Link to="/component/mypage" className="header__button">
-              회원정보
-            </Link>
-            <button onClick={handleLogout} className="header__button">
-              로그아웃
-            </button>
-          </>
-        ) : (
-          <>
+        <nav className="header__nav">
+          {isLoggedIn ? (
+            <>
+              <Link to="/loadmap" className="header__link">
+                캠퍼스 맵
+              </Link>
+              <Link to="/component/mypage" className="header__link">
+                회원정보
+              </Link>
+              <button onClick={handleLogout} className="header__button">
+                로그아웃
+              </button>
+            </>
+          ) : (
             <Link to="/component/signup" className="header__button">
               회원가입
             </Link>
-          </>
-        )}
-      </nav>
+          )}
+        </nav>
+      </div>
     </header>
   );
 };

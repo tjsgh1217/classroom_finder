@@ -4,9 +4,6 @@ import './home_login.css';
 
 const UserInfoCard = ({ user }) => (
   <div className="login-card user-profile-card">
-    <div className="login-header">
-      <h1 className="login-title">내 정보</h1>
-    </div>
     <div className="user-info-content">
       <div className="user-avatar">
         <span className="avatar-text">{user.name.charAt(0)}</span>
