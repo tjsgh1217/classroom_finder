@@ -55,7 +55,6 @@ export class AuthService {
   }
 
   private validatePassword(password: string): boolean {
-    // 영어, 숫자, 특수문자만 허용하고, 특수문자는 반드시 포함
     const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
     const validCharsOnly = /^[A-Za-z0-9!@#$%^&*(),.?":{}|<>]+$/.test(password);
 
@@ -179,17 +178,17 @@ export class AuthService {
     return { message: '내 정보 조회 성공', user: profile };
   }
 
-  async findUser(studentId: string) {
-    const user = await this.getUser(studentId);
-    if (!user) throw new NotFoundException('사용자를 찾을 수 없습니다.');
-    const { password, ...profile } = user;
-    return { message: '사용자 조회 성공', user: profile };
-  }
+  // async findUser(studentId: string) {
+  //   const user = await this.getUser(studentId);
+  //   if (!user) throw new NotFoundException('사용자를 찾을 수 없습니다.');
+  //   const { password, ...profile } = user;
+  //   return { message: '사용자 조회 성공', user: profile };
+  // }
 
-  private async getUser(studentId: string): Promise<User | null> {
-    const { Item } = await this.db.send(
-      new GetCommand({ TableName: this.tableName, Key: { studentId } }),
-    );
-    return (Item as User) || null;
-  }
+  // private async getUser(studentId: string): Promise<User | null> {
+  //   const { Item } = await this.db.send(
+  //     new GetCommand({ TableName: this.tableName, Key: { studentId } }),
+  //   );
+  //   return (Item as User) || null;
+  // }
 }

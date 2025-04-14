@@ -210,3 +210,28 @@
   color: #4338ca;
   text-decoration: underline;
 }
+@media (max-width: 480px) {
+  .signup-container {
+    padding: 10px;
+  }
+
+  .signup-card {
+    margin: 10px 5px;
+    padding: 30px 20px;
+    max-width: 95%;
+    width: 95%;
+  }
+}
+
+@media (max-width: 360px) {
+  .signup-card {
+    padding: 25px 15px;
+    margin: 5px 2px;
+    max-width: 98%;
+    width: 98%;
+  }
+
+  .signup-form input {
+    padding: 12px 12px 12px 40px;
+  }
+}
