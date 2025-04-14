@@ -55,8 +55,11 @@ export class AuthService {
   }
 
   private validatePassword(password: string): boolean {
-    const regex = /[!@#$%^&*(),.?":{}|<>]/;
-    return regex.test(password);
+    // 영어, 숫자, 특수문자만 허용하고, 특수문자는 반드시 포함
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    const validCharsOnly = /^[A-Za-z0-9!@#$%^&*(),.?":{}|<>]+$/.test(password);
+
+    return hasSpecialChar && validCharsOnly;
   }
 
   async signUp(
@@ -70,7 +73,9 @@ export class AuthService {
     }
 
     if (!this.validatePassword(password)) {
-      throw new BadRequestException('비밀번호는 특수문자를 포함해야 합니다.');
+      throw new BadRequestException(
+        '비밀번호는 영어, 숫자, 특수문자만 사용 가능하며, 특수문자를 반드시 포함해야 합니다.',
+      );
     }
 
     if (await this.getUser(studentId)) {
@@ -135,7 +140,9 @@ export class AuthService {
     }
 
     if (!this.validatePassword(newPassword)) {
-      throw new BadRequestException('비밀번호는 특수문자를 포함해야 합니다.');
+      throw new BadRequestException(
+        '비밀번호는 영어, 숫자, 특수문자만 사용 가능하며, 특수문자를 반드시 포함해야 합니다.',
+      );
     }
 
     const hashed = await bcrypt.hash(newPassword, 10);

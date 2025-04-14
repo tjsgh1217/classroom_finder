@@ -29,6 +29,7 @@
   height: 40px;
   width: auto;
   transition: transform 0.3s ease;
+  border-radius: 8px;
 }
 
 .header__logo-img:hover {
