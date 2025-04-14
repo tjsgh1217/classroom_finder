@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import './signup.css';
+import API from '../api.ts';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -84,7 +84,7 @@ const Signup = () => {
 
     try {
       // eslint-disable-next-line no-unused-vars
-      const response = await axios.post('http://localhost:8080/auth/signup', {
+      const response = await API.post('/auth/signup', {
         studentId: formData.studentId,
         password: formData.password,
         name: formData.name,

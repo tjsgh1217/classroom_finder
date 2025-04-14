@@ -185,10 +185,10 @@ export class AuthService {
   //   return { message: '사용자 조회 성공', user: profile };
   // }
 
-  // private async getUser(studentId: string): Promise<User | null> {
-  //   const { Item } = await this.db.send(
-  //     new GetCommand({ TableName: this.tableName, Key: { studentId } }),
-  //   );
-  //   return (Item as User) || null;
-  // }
+  private async getUser(studentId: string): Promise<User | null> {
+    const { Item } = await this.db.send(
+      new GetCommand({ TableName: this.tableName, Key: { studentId } }),
+    );
+    return (Item as User) || null;
+  }
 }

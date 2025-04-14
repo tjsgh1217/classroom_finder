@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
 import './home_login.css';
+import API from '../src/api.ts';
 
 const UserInfoCard = ({ user }) => (
   <div className="login-card user-profile-card">
@@ -55,7 +55,6 @@ const LoginForm = ({
           />
         </div>
       </div>
-
       <div className="form-field">
         <label htmlFor="password">Password</label>
         <div className="input-container">
@@ -87,9 +86,8 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
 
   const fetchUserInfo = async (token) => {
     try {
-      const res = await axios.get('http://localhost:8080/auth/me', {
+      const res = await API.get('/auth/me', {
         headers: { Authorization: `Bearer ${token}` },
-        withCredentials: true,
       });
 
       const userInfo = res.data.user;
@@ -125,7 +123,7 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
       setError('');
 
       try {
-        const res = await axios.post('http://localhost:8080/auth/login', {
+        const res = await API.post('/auth/login', {
           studentId,
           password,
         });

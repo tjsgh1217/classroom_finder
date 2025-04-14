@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import './mypage.css';
-
-const API_URL = 'http://localhost:8080';
+import API from '../api.ts';
 
 const Mypage = () => {
   const [userInfo, setUserInfo] = useState({
@@ -36,7 +34,7 @@ const Mypage = () => {
           return;
         }
 
-        const response = await axios.get(`${API_URL}/auth/me`, {
+        const response = await API.get('/auth/me', {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -71,8 +69,8 @@ const Mypage = () => {
     try {
       const token = localStorage.getItem('token');
       // eslint-disable-next-line no-unused-vars
-      const response = await axios.patch(
-        `${API_URL}/auth/password`,
+      const response = await API.patch(
+        '/auth/password',
         {
           oldpassword: passwordData.oldpassword,
           newpassword: passwordData.newpassword,
@@ -121,7 +119,7 @@ const Mypage = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`${API_URL}/auth/delete`, {
+      await API.delete('/auth/delete', {
         data: { password: deleteData.password },
         headers: { Authorization: `Bearer ${token}` },
       });

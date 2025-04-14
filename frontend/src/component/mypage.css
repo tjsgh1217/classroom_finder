@@ -411,148 +411,12 @@ body {
 .cancel:hover {
   background-color: #edf2f7;
 }
+
 @media (max-width: 768px) {
   .profile-container {
     margin: 20px auto;
     padding: 15px;
-  }
-
-  .profile-header {
-    margin-bottom: 40px;
-  }
-
-  .profile-header h1 {
-    font-size: 1.8rem;
-  }
-
-  .profile-card {
-    padding: 25px 20px;
-    border-radius: 12px;
-  }
-
-  .avatar-circle {
-    width: 80px;
-    height: 80px;
-  }
-
-  .avatar-text {
-    font-size: 32px;
-  }
-
-  .info-item {
-    padding: 12px;
-    margin-bottom: 15px;
-  }
-
-  .info-icon {
-    font-size: 20px;
-    margin-right: 12px;
-    width: 35px;
-    height: 35px;
-  }
-
-  .info-content label {
-    font-size: 0.8rem;
-  }
-
-  .info-content p {
-    font-size: 1rem;
-  }
-
-  .profile-actions {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .btn {
-    width: 100%;
-    padding: 12px 20px;
-  }
-
-  .modal {
-    padding: 20px;
-    width: 95%;
-  }
-
-  .modal-header h2 {
-    font-size: 1.3rem;
-  }
-
-  .form-group label {
-    font-size: 0.9rem;
-  }
-
-  .input-container input {
-    padding: 12px 14px;
-    font-size: 14px;
-  }
-
-  .warning {
-    font-size: 0.85rem;
-  }
-
-  .modal-actions {
-    flex-direction: column-reverse;
-    gap: 10px;
-  }
-
-  .modal-actions .btn {
-    width: 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .profile-container {
-    margin: 10px auto;
-    padding: 10px;
-  }
-
-  .profile-header h1 {
-    font-size: 1.6rem;
-  }
-
-  .profile-card {
-    padding: 20px 15px;
-  }
-
-  .message {
-    padding: 12px;
-    font-size: 0.9rem;
-  }
-
-  .avatar-circle {
-    width: 70px;
-    height: 70px;
-  }
-
-  .avatar-text {
-    font-size: 28px;
-  }
-
-  .info-item {
-    padding: 10px;
-  }
-
-  .info-icon {
-    width: 30px;
-    height: 30px;
-    font-size: 18px;
-    margin-right: 10px;
-  }
-
-  .info-content label {
-    font-size: 0.75rem;
-  }
-
-  .info-content p {
-    font-size: 0.9rem;
-  }
-}
-@media (max-width: 768px) {
-  .profile-container {
-    margin: 20px auto;
-    padding: 15px;
-    max-width: 90%;
+    max-width: 95%;
   }
   .profile-header {
     margin-bottom: 40px;
@@ -561,10 +425,11 @@ body {
     font-size: 1.8rem;
   }
   .profile-card {
-    padding: 25px 20px;
+    padding: 25px 15px;
     border-radius: 12px;
-    margin: 0 10px;
-    width: calc(100% - 20px);
+    margin: 0 auto;
+    width: 92%;
+    max-width: 500px;
   }
   .avatar-circle {
     width: 80px;
@@ -602,6 +467,7 @@ body {
   .btn {
     width: 100%;
     padding: 12px 20px;
+    margin-top: 12px;
   }
   .modal {
     padding: 20px;
