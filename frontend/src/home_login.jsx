@@ -49,7 +49,12 @@ const LoginForm = ({
             id="studentId"
             autoComplete="current-studentId"
             value={studentId}
-            onChange={(e) => setStudentId(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (/^\d*$/.test(value) && value.length <= 8) {
+                setStudentId(value);
+              }
+            }}
             placeholder="학번을 입력하세요."
             required
           />
@@ -167,23 +172,29 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
           </div>
           <div className="notice-content">
             <div className="notice-item">
-              <h3>25.04.04 시간표 업데이트</h3>
-              <p>11번 건물 강의실 시간표 업데이트 완료</p>
-              <span className="notice-date">2025.04.04</span>
+              <h3>서비스 이용 방법</h3>
+              <p>우측 상단에 캠퍼스 맵 클릭</p>
+              <p>건물 번호 클릭</p>
+              <p>층과 강의실 클릭</p>
+              <span className="notice-date">2025.04.16</span>
             </div>
             <div className="notice-item">
-              <h3>25.04.04 시간표 업데이트</h3>
+              <h3>25.04.15 시간표 업데이트</h3>
+              <p>02번 건물 강의실 시간표 업데이트 완료</p>
+              <p>05번 건물 강의실 시간표 업데이트 완료</p>
               <p>11번 건물 강의실 시간표 업데이트 완료</p>
-              <p>11번 건물 강의실 시간표 업데이트 완료</p>
-              <p>11번 건물 강의실 시간표 업데이트 완료</p>
-              <p>11번 건물 강의실 시간표 업데이트 완료</p>
-              <p>11번 건물 강의실 시간표 업데이트 완료</p>
-              <span className="notice-date">2025.04.04</span>
+              <p>03번 건물 강의실 시간표 업데이트 완료</p>
+              <p>04번 건물 강의실 시간표 업데이트 완료</p>
+              <p>56번 건물 강의실 시간표 업데이트 완료</p>
+              <p>26번 건물 강의실 시간표 업데이트 완료</p>
+
+              <span className="notice-date">2025.04.15</span>
             </div>
             <div className="notice-item">
-              <h3>25.04.04 시간표 업데이트</h3>
-              <p>11번 건물 강의실 시간표 업데이트 완료</p>
-              <span className="notice-date">2025.04.04</span>
+              <h3>25.04.13 시간표 업데이트</h3>
+              <p>06번 건물 강의실 시간표 업데이트 완료</p>
+              <p>09번 건물 강의실 시간표 업데이트 완료</p>
+              <span className="notice-date">2025.04.13</span>
             </div>
           </div>
         </div>

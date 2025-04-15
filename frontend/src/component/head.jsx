@@ -27,11 +27,14 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
           />
         </Link>
         <nav className="header__nav">
+          <Link to="/loadmap" className="header__link">
+            캠퍼스 맵
+          </Link>
           {isLoggedIn ? (
             <>
-              <Link to="/loadmap" className="header__link">
+              {/* <Link to="/loadmap" className="header__link">
                 캠퍼스 맵
-              </Link>
+              </Link> */}
               <Link to="/component/mypage" className="header__link">
                 회원정보
               </Link>

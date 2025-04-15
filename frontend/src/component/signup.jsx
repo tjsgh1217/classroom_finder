@@ -26,6 +26,9 @@ const Signup = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === 'studentId' && !/^\d{0,8}$/.test(value)) {
+      return;
+    }
     setFormData({
       ...formData,
       [name]: value,

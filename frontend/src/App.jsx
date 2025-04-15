@@ -155,23 +155,17 @@ function AppRoutes() {
             <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
           }
         />
-        <Route
-          path="/loadmap"
-          element={<ProtectedRoute element={<Loadmap />} />}
-        />
+        <Route path="/loadmap" element={<Loadmap />} />
         <Route path="/component/signup" element={<Signup />} />
+        <Route path="/building/:buildingId" element={<BuildingRouter />} />
         <Route
-          path="/component/mypage"
-          element={<ProtectedRoute element={<Mypage />} />}
+          path="/building/:buildingId/room/:roomId"
+          element={<RoomRouter />}
         />
 
         <Route
-          path="/building/:buildingId"
-          element={<ProtectedRoute element={<BuildingRouter />} />}
-        />
-        <Route
-          path="/building/:buildingId/room/:roomId"
-          element={<ProtectedRoute element={<RoomRouter />} />}
+          path="/component/mypage"
+          element={<ProtectedRoute element={<Mypage />} />}
         />
       </Routes>
     </>

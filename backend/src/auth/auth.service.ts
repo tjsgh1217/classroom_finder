@@ -6,7 +6,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import {
@@ -37,14 +37,14 @@ export class AuthService {
     this.jwtSecret =
       this.configService.get<string>('JWT_SECRET') || 'MY_SECRET';
 
-    const accessKeyId = this.configService.get<string>('AWS_ACCESS_KEY_ID')!;
-    const secretAccessKey = this.configService.get<string>(
-      'AWS_SECRET_ACCESS_KEY',
-    )!;
+    // const accessKeyId = this.configService.get<string>('AWS_ACCESS_KEY_ID')!;
+    // const secretAccessKey = this.configService.get<string>(
+    //   'AWS_SECRET_ACCESS_KEY',
+    // )!;
 
     const client = new DynamoDBClient({
       region,
-      credentials: { accessKeyId, secretAccessKey },
+      // credentials: { accessKeyId, secretAccessKey },
     });
     this.db = DynamoDBDocumentClient.from(client);
   }
