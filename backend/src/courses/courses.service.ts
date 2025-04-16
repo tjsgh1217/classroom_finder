@@ -6,15 +6,21 @@ interface RawCourse {
   courseId: string;
   department: string;
   courseName: string;
-  time: string; // 원본 CSV의 time
-  room: string; // 원본 CSV의 room
+  time: string;
+  room: string; 
+}
+
+interface ScheduleItem {
+  dayKr: string;
+  period: string;
+  room: string;
 }
 
 export interface CourseWithTime {
   courseId: string;
   department: string;
   courseName: string;
-  time: string;
+  time: string; 
   room: string;
 }
 
@@ -28,29 +34,68 @@ export class CoursesService {
     this.db = DynamoDBDocumentClient.from(client);
   }
 
-  async findCoursesByRoom(room: string): Promise<CourseWithTime[]> {
+  private parseSchedule(row: RawCourse): ScheduleItem[] {
+    const timeTokens = row.time.replace(/\s+/g, '').split('/');
+    const rooms = row.room.replace(/\s+/g, '').split('/');
+    const sched: ScheduleItem[] = [];
+    let currentDay: string | null = null;
+
+    for (let i = 0; i < timeTokens.length; i++) {
+      const token = timeTokens[i];
+      const m = token.match(/^([월화수목금])(\S+)$/);
+      if (m && m[1] && m[2] !== '') {
+        currentDay = m[1];
+        sched.push({
+          dayKr: currentDay,
+          period: m[2],
+          room: rooms[i] ?? rooms.at(-1),
+        });
+      } else if (currentDay) {
+
+        sched.push({
+          dayKr: currentDay,
+          period: token,
+          room: rooms[i] ?? rooms.at(-1),
+        });
+      }
+    }
+    return sched;
+  }
+
+  async findBlockByRoom(room: string): Promise<CourseWithTime[]> {
     const { Items } = await this.db.send(
-      new ScanCommand({ TableName: this.TABLE }),
+      new ScanCommand({ TableName: this.TABLE })
     );
     const raw = Items as RawCourse[];
-    const filtered = raw.filter(r => r.room.split('/').includes(room));
-    const seen = new Set<string>();
-    const result: CourseWithTime[] = [];
+    const out: CourseWithTime[] = [];
 
-    for (const r of filtered) {
-      const key = `${r.courseId}|${r.time}|${r.room}`;
-      if (seen.has(key)) continue;
-      seen.add(key);
+    for (const r of raw) {
 
-      result.push({
-        courseId: r.courseId,
-        department: r.department,
-        courseName: r.courseName,
-        time: r.time,
-        room: r.room,
+      if (!r.room.replace(/\s+/g, '').split('/').includes(room)) continue;
+
+      const sched = this.parseSchedule(r).filter(s => s.room === room);
+      const groups: Record<string, string[]> = {};
+      sched.forEach(s => {
+        (groups[s.dayKr] ||= []).push(s.period);
       });
+
+      for (const [dayKr, periods] of Object.entries(groups)) {
+        out.push({
+          courseId: r.courseId,
+          department: r.department,
+          courseName: r.courseName,
+          time: `${dayKr}${periods.join('/')}`,
+          room,
+        });
+      }
     }
 
-    return result;
+    const order: Record<string, number> = { 월: 0, 화: 1, 수: 2, 목: 3, 금: 4 };
+    out.sort((a, b) => {
+      const dA = a.time.charAt(0);
+      const dB = b.time.charAt(0);
+      return (order[dA] ?? 5) - (order[dB] ?? 5);
+    });
+    return out;
   }
 }
