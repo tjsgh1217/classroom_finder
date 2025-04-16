@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-
-import '../../component/room_style.css';
 import API from '../../api.ts';
+import '../../component/room_style.css';
 
 const ClassRoom = () => {
   const { roomId } = useParams();
@@ -79,9 +78,11 @@ const ClassRoom = () => {
       if (days.includes(part.charAt(0))) {
         currentDay = part.charAt(0);
         const period = part.substring(1);
-        slots.push(parseTimeSlot(currentDay + period));
+        const slot = parseTimeSlot(currentDay + period);
+        if (slot) slots.push(slot);
       } else {
-        slots.push(parseTimeSlot(currentDay + part));
+        const slot = parseTimeSlot(currentDay + part);
+        if (slot) slots.push(slot);
       }
     }
 
