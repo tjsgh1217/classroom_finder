@@ -28,14 +28,14 @@
   .loadmap {
     margin: 0;
     padding: 0;
-    line-height: 0; /* 이미지 아래 공백 제거 */
+    line-height: 0;
   }
 
   .loadmap__image {
     max-width: 100%;
-    display: block; /* 이미지 아래 공백 제거 */
-    margin: 0 auto; /* 중앙 정렬 유지 */
-    vertical-align: bottom; /* 이미지 아래 공백 제거 */
+    display: block;
+    margin: 0 auto;
+    vertical-align: bottom;
   }
 
   .loadmap__building {
@@ -50,11 +50,10 @@
   }
 }
 
-/* 더 작은 모바일 화면에 대한 추가 조정 */
 @media (max-width: 480px) {
   .loadmap__building {
     padding: 4px;
-    font-size: 10px;
+    font-size: 5px;
     border-width: 1px;
   }
 

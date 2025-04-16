@@ -327,7 +327,7 @@ body {
 
 @media (max-width: 480px) {
   .content-wrapper {
-    padding: 24px 16px;
+    padding: 24px 16px 90px;
   }
 
   .floor-button {

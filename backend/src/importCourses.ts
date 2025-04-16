@@ -68,3 +68,5 @@ fs.createReadStream(__dirname + '/courses.csv')
   .on('error', (err) => {
     console.error('CSV 읽기 중 오류:', err);
   });
+
+// npx ts-node src/importCourses.ts

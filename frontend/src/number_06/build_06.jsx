@@ -8,14 +8,27 @@ const Build06 = () => {
   const navigate = useNavigate();
 
   const floorRoomNumbers = {
-    1: [6, 19],
-    2: [19],
-    3: [20, 27],
-    4: [8, 9, 10, 11, 20, 25],
-    5: [16, 17, 18, 19, 20, 22],
+    1: [],
+    2: [12, 13, 17, 28],
+    3: [34, 35],
+    4: [],
+    5: [10, 20, 26, 27, 28, 29],
   };
 
-  const availableRooms = ['060106'];
+  const availableRooms = [
+    '060212',
+    '060213',
+    '060217',
+    '060228',
+    '060334',
+    '060335',
+    '060510',
+    '060520',
+    '060526',
+    '060527',
+    '060528',
+    '060529',
+  ];
 
   const handleFloorChange = (floor) => {
     setSelectedFloor(floor);

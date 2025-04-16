@@ -8,14 +8,28 @@ const Build03 = () => {
   const navigate = useNavigate();
 
   const floorRoomNumbers = {
-    1: [6, 19],
-    2: [19],
-    3: [20, 27],
-    4: [8, 9, 10, 11, 20, 25],
-    5: [16, 17, 18, 19, 20, 22],
+    1: [6, 11, 17, 18, 19, 20],
+    2: [],
+    3: [10, 23],
+    4: [1, 11, 12, 13, 14, 15],
   };
 
-  const availableRooms = ['030106'];
+  const availableRooms = [
+    '030106',
+    '030111',
+    '030117',
+    '030118',
+    '030119',
+    '030120',
+    '030310',
+    '030323',
+    '030401',
+    '030411',
+    '030412',
+    '030413',
+    '030414',
+    '030415',
+  ];
 
   const handleFloorChange = (floor) => {
     setSelectedFloor(floor);
@@ -46,7 +60,7 @@ const Build03 = () => {
       <div className="content-wrapper">
         <div className="floor-selector">
           <div className="floor-buttons">
-            {[1, 2, 3, 4, 5].map((floor) => (
+            {[1, 2, 3, 4].map((floor) => (
               <button
                 key={floor}
                 className={`floor-button ${
