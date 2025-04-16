@@ -21,6 +21,11 @@ import Build11 from './number_11/build_11';
 import Build02 from './number_02/build_02';
 import Build03 from './number_03/build_03';
 import Build26 from './number_26/build_26';
+import Build07 from './number_07/build_07';
+import Build50 from './number_50/build_50';
+import Build42 from './number_42/build_42';
+import Build45 from './number_45/build_45';
+import Build47 from './number_47/build_47';
 
 import Room090425 from './number_09/4F/room090425';
 import Room090106 from './number_09/1F/room090106';
@@ -247,6 +252,11 @@ function BuildingRouter() {
   if (buildingId === '2') return <Build02 />;
   if (buildingId === '3') return <Build03 />;
   if (buildingId === '26') return <Build26 />;
+  if (buildingId === '7') return <Build07 />;
+  if (buildingId === '50') return <Build50 />;
+  if (buildingId === '42') return <Build42 />;
+  if (buildingId === '45') return <Build45 />;
+  if (buildingId === '47') return <Build47 />;
 }
 const AuthContext = createContext();
 function useAuth() {

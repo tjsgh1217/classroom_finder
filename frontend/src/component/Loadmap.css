@@ -24,6 +24,50 @@
 .loadmap__building:hover {
   transform: scale(1.5);
 }
+@media (min-width: 769px) and (max-width: 1024px) {
+  .loadmap__building {
+    padding: 6px;
+    font-size: 13px;
+    border-width: 1.8px;
+  }
+
+  .loadmap__building:hover,
+  .loadmap__building:active {
+    transform: scale(1.4);
+  }
+
+  .loadmap__building-03 {
+    left: 31% !important;
+  }
+  .loadmap__building-02 {
+    left: 61.5% !important;
+  }
+  .loadmap__building-56 {
+    left: 39.5% !important;
+  }
+  .loadmap__building-26 {
+    left: 57.5% !important;
+  }
+  .loadmap__building-04 {
+    left: 66.5% !important;
+  }
+  .loadmap__building-05 {
+    left: 62% !important;
+  }
+  .loadmap__building-45 {
+    left: 79% !important;
+  }
+  .loadmap__building-42 {
+    left: 74.5% !important;
+  }
+  .loadmap__building-50 {
+    left: 80.5% !important;
+  }
+  .loadmap__building-47 {
+    left: 73.5% !important;
+    top: 77.1% !important;
+  }
+}
 @media (max-width: 768px) {
   .loadmap {
     margin: 0;
@@ -48,11 +92,42 @@
   .loadmap__building:active {
     transform: scale(1.3);
   }
+  .loadmap__building-03 {
+    left: 31% !important;
+  }
+  .loadmap__building-02 {
+    left: 61.5% !important;
+  }
+  .loadmap__building-56 {
+    left: 39.5% !important;
+  }
+  .loadmap__building-26 {
+    left: 57.5% !important;
+  }
+  .loadmap__building-04 {
+    left: 66.5% !important;
+  }
+  .loadmap__building-05 {
+    left: 62% !important;
+  }
+  .loadmap__building-45 {
+    left: 79% !important;
+  }
+  .loadmap__building-42 {
+    left: 74.5% !important;
+  }
+  .loadmap__building-50 {
+    left: 80.5% !important;
+  }
+  .loadmap__building-47 {
+    left: 73.5% !important;
+    top: 77.1% !important;
+  }
 }
 
 @media (max-width: 480px) {
   .loadmap__building {
-    padding: 4px;
+    padding: 3px;
     font-size: 5px;
     border-width: 1px;
   }
@@ -60,5 +135,36 @@
   .loadmap__building:hover,
   .loadmap__building:active {
     transform: scale(1.2);
+  }
+  .loadmap__building-03 {
+    left: 31% !important;
+  }
+  .loadmap__building-02 {
+    left: 61.5% !important;
+  }
+  .loadmap__building-56 {
+    left: 39.5% !important;
+  }
+  .loadmap__building-26 {
+    left: 57.5% !important;
+  }
+  .loadmap__building-04 {
+    left: 66.5% !important;
+  }
+  .loadmap__building-05 {
+    left: 62% !important;
+  }
+  .loadmap__building-45 {
+    left: 79% !important;
+  }
+  .loadmap__building-42 {
+    left: 74.5% !important;
+  }
+  .loadmap__building-50 {
+    left: 80.5% !important;
+  }
+  .loadmap__building-47 {
+    left: 73.5% !important;
+    top: 77.1% !important;
   }
 }
