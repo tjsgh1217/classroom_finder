@@ -62,6 +62,7 @@ import Room560708 from './number_56/7F/room560708';
 import Room560710 from './number_56/7F/room560710';
 import Room560711 from './number_56/7F/room560711';
 import Room560712 from './number_56/7F/room560712';
+import Room560909 from './number_56/9F/room560909';
 
 import Room060212 from './number_06/2F/room060212';
 import Room060213 from './number_06/2F/room060213';
@@ -93,6 +94,38 @@ import Room030412 from './number_03/4F/room030412';
 import Room030413 from './number_03/4F/room030413';
 import Room030414 from './number_03/4F/room030414';
 import Room030415 from './number_03/4F/room030415';
+
+import Room050349 from './number_05/3F/room050349';
+import Room050351 from './number_05/3F/room050351';
+import Room050431 from './number_05/4F/room050431';
+import Room050432 from './number_05/4F/room050432';
+import Room050435 from './number_05/4F/room050435';
+import Room050440 from './number_05/4F/room050440';
+import Room050503 from './number_05/5F/room050503';
+import Room050504 from './number_05/5F/room050504';
+import Room050505 from './number_05/5F/room050505';
+import Room050506 from './number_05/5F/room050506';
+import Room050508 from './number_05/5F/room050508';
+import Room050510 from './number_05/5F/room050510';
+import Room050511 from './number_05/5F/room050511';
+import Room050512 from './number_05/5F/room050512';
+import Room050521 from './number_05/5F/room050521';
+import Room050603 from './number_05/6F/room050603';
+import Room050604 from './number_05/6F/room050604';
+import Room050606 from './number_05/6F/room050606';
+import Room050607 from './number_05/6F/room050607';
+import Room050608 from './number_05/6F/room050608';
+import Room050609 from './number_05/6F/room050609';
+import Room050610 from './number_05/6F/room050610';
+import Room050615 from './number_05/6F/room050615';
+import Room050616 from './number_05/6F/room050616';
+import Room050701 from './number_05/7F/room050701';
+import Room050702 from './number_05/7F/room050702';
+import Room050703 from './number_05/7F/room050703';
+import Room050704 from './number_05/7F/room050704';
+import Room050705 from './number_05/7F/room050705';
+import Room050708 from './number_05/7F/room050708';
+import Room050709 from './number_05/7F/room050709';
 
 function RoomRouter() {
   const { roomId } = useParams();
@@ -137,6 +170,7 @@ function RoomRouter() {
     560710: <Room560710 />,
     560711: <Room560711 />,
     560712: <Room560712 />,
+    560909: <Room560909 />,
     '060212': <Room060212 />,
     '060213': <Room060213 />,
     '060217': <Room060217 />,
@@ -165,6 +199,37 @@ function RoomRouter() {
     '030413': <Room030413 />,
     '030414': <Room030414 />,
     '030415': <Room030415 />,
+    '050349': <Room050349 />,
+    '050351': <Room050351 />,
+    '050431': <Room050431 />,
+    '050432': <Room050432 />,
+    '050435': <Room050435 />,
+    '050440': <Room050440 />,
+    '050503': <Room050503 />,
+    '050504': <Room050504 />,
+    '050505': <Room050505 />,
+    '050506': <Room050506 />,
+    '050508': <Room050508 />,
+    '050510': <Room050510 />,
+    '050511': <Room050511 />,
+    '050512': <Room050512 />,
+    '050521': <Room050521 />,
+    '050603': <Room050603 />,
+    '050604': <Room050604 />,
+    '050606': <Room050606 />,
+    '050607': <Room050607 />,
+    '050608': <Room050608 />,
+    '050609': <Room050609 />,
+    '050610': <Room050610 />,
+    '050615': <Room050615 />,
+    '050616': <Room050616 />,
+    '050701': <Room050701 />,
+    '050702': <Room050702 />,
+    '050703': <Room050703 />,
+    '050704': <Room050704 />,
+    '050705': <Room050705 />,
+    '050708': <Room050708 />,
+    '050709': <Room050709 />,
   };
 
   return roomComponents[roomId] || <div>해당 방을 찾을 수 없습니다.</div>;
