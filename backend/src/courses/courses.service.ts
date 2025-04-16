@@ -6,7 +6,7 @@ interface RawCourse {
   courseId: string;
   department: string;
   courseName: string;
-  time: string;
+  time: string; 
   room: string; 
 }
 
@@ -35,29 +35,33 @@ export class CoursesService {
   }
 
   private parseSchedule(row: RawCourse): ScheduleItem[] {
-    const timeTokens = row.time.replace(/\s+/g, '').split('/');
+    const tokenPattern = /([월화수목금]\w+)|(\d+)/g;
+    const tokens = row.time.replace(/\s+/g, '').match(tokenPattern) ?? [];
     const rooms = row.room.replace(/\s+/g, '').split('/');
+
     const sched: ScheduleItem[] = [];
-    let currentDay: string | null = null;
+    let prevDay: string | null = null;
+    let roomIndex = 0;
 
-    for (let i = 0; i < timeTokens.length; i++) {
-      const token = timeTokens[i];
-      const m = token.match(/^([월화수목금])(\S+)$/);
-      if (m && m[1] && m[2] !== '') {
-        currentDay = m[1];
-        sched.push({
-          dayKr: currentDay,
-          period: m[2],
-          room: rooms[i] ?? rooms.at(-1),
-        });
-      } else if (currentDay) {
-
-        sched.push({
-          dayKr: currentDay,
-          period: token,
-          room: rooms[i] ?? rooms.at(-1),
-        });
+    for (const token of tokens) {
+      let dayKr: string | null = null;
+      let period: string;
+      const m = token.match(/^([월화수목금])(.+)$/);
+      if (m) {
+        dayKr = m[1];
+        period = m[2]; 
+        if (prevDay && dayKr !== prevDay) {
+          roomIndex = Math.min(roomIndex + 1, rooms.length - 1);
+        }
+        prevDay = dayKr;
+      } else if (prevDay) {
+        dayKr = prevDay;
+        period = token;
+      } else {
+        continue;
       }
+      const room = rooms[roomIndex] ?? rooms.at(-1);
+      sched.push({ dayKr, period, room });
     }
     return sched;
   }
@@ -70,15 +74,13 @@ export class CoursesService {
     const out: CourseWithTime[] = [];
 
     for (const r of raw) {
-
       if (!r.room.replace(/\s+/g, '').split('/').includes(room)) continue;
-
       const sched = this.parseSchedule(r).filter(s => s.room === room);
       const groups: Record<string, string[]> = {};
       sched.forEach(s => {
         (groups[s.dayKr] ||= []).push(s.period);
       });
-
+      
       for (const [dayKr, periods] of Object.entries(groups)) {
         out.push({
           courseId: r.courseId,
