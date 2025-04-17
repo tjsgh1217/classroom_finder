@@ -8,14 +8,11 @@ const Build45 = () => {
   const navigate = useNavigate();
 
   const floorRoomNumbers = {
-    1: [6, 19],
-    2: [19],
-    3: [20, 27],
-    4: [8, 9, 10, 11, 20, 25],
-    5: [16, 17, 18, 19, 20, 22],
+    1: [],
+    2: [1, 2],
   };
 
-  const availableRooms = ['450106'];
+  const availableRooms = ['450201', '450202'];
 
   const handleFloorChange = (floor) => {
     setSelectedFloor(floor);
@@ -46,7 +43,7 @@ const Build45 = () => {
       <div className="content-wrapper">
         <div className="floor-selector">
           <div className="floor-buttons">
-            {[1, 2, 3, 4, 5].map((floor) => (
+            {[1, 2].map((floor) => (
               <button
                 key={floor}
                 className={`floor-button ${

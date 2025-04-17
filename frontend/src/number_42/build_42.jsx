@@ -8,14 +8,10 @@ const Build42 = () => {
   const navigate = useNavigate();
 
   const floorRoomNumbers = {
-    1: [6, 19],
-    2: [19],
-    3: [20, 27],
-    4: [8, 9, 10, 11, 20, 25],
-    5: [16, 17, 18, 19, 20, 22],
+    1: [26, 47],
   };
 
-  const availableRooms = ['420106'];
+  const availableRooms = ['420126', '420147'];
 
   const handleFloorChange = (floor) => {
     setSelectedFloor(floor);
@@ -46,7 +42,7 @@ const Build42 = () => {
       <div className="content-wrapper">
         <div className="floor-selector">
           <div className="floor-buttons">
-            {[1, 2, 3, 4, 5].map((floor) => (
+            {[1].map((floor) => (
               <button
                 key={floor}
                 className={`floor-button ${
