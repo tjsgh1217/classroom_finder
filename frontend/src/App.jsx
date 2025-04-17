@@ -83,6 +83,11 @@ import Room060527 from './number_06/5F/room060527';
 import Room060528 from './number_06/5F/room060528';
 import Room060529 from './number_06/5F/room060529';
 
+import Room260214 from './number_26/2F/room260214';
+import Room260215 from './number_26/2F/room260215';
+import Room260216 from './number_26/2F/room260216';
+import Room260222 from './number_26/2F/room260222';
+import Room260223 from './number_26/2F/room260223';
 import Room260228 from './number_26/2F/room260228';
 import Room260229 from './number_26/2F/room260229';
 
@@ -190,6 +195,11 @@ function RoomRouter() {
     '060527': <Room060527 />,
     '060528': <Room060528 />,
     '060529': <Room060529 />,
+    260214: <Room260214 />,
+    260215: <Room260215 />,
+    260216: <Room260216 />,
+    260222: <Room260222 />,
+    260223: <Room260223 />,
     260228: <Room260228 />,
     260229: <Room260229 />,
     '030106': <Room030106 />,

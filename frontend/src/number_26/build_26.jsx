@@ -9,11 +9,19 @@ const Build26 = () => {
 
   const floorRoomNumbers = {
     1: [],
-    2: [28, 29],
+    2: [14, 15, 16, 22, 23, 28, 29],
     3: [],
   };
 
-  const availableRooms = ['260228', '260229'];
+  const availableRooms = [
+    '260214',
+    '260215',
+    '260216',
+    '260222',
+    '260223',
+    '260228',
+    '260229',
+  ];
 
   const handleFloorChange = (floor) => {
     setSelectedFloor(floor);
