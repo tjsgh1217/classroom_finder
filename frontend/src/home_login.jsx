@@ -182,6 +182,11 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
               <h3>강의실 목록 안내사항</h3>
               <p>실험실, 실습실 제외</p>
               <p>다목적 강의실 제외</p>
+              <p>
+                07번 건물은 강의실과 실습실 구분이 어려워 전 강의실을
+                추가했습니다.
+              </p>
+
               <span className="notice-date">2025.04.15</span>
             </div>
             <div className="notice-item">
@@ -195,6 +200,11 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
               <p>04번 건물 강의실 시간표 업데이트 완료</p>
               <p>56번 건물 강의실 시간표 업데이트 완료</p>
               <p>26번 건물 강의실 시간표 업데이트 완료</p>
+              <p>07번 건물 강의실 시간표 업데이트 완료</p>
+              <p>42번 건물 강의실 시간표 업데이트 완료</p>
+              <p>45번 건물 강의실 시간표 업데이트 완료</p>
+              <p>47번 건물 강의실 시간표 업데이트 완료</p>
+              <p>50번 건물 강의실 시간표 업데이트 완료</p>
               <span className="notice-date">2025.04.13</span>
             </div>
           </div>

@@ -8,10 +8,10 @@ const Build42 = () => {
   const navigate = useNavigate();
 
   const floorRoomNumbers = {
-    1: [26, 47],
+    1: [25, 26, 47],
   };
 
-  const availableRooms = ['420126', '420147'];
+  const availableRooms = ['420125', '420126', '420147'];
 
   const handleFloorChange = (floor) => {
     setSelectedFloor(floor);
