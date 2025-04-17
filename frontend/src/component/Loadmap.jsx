@@ -14,7 +14,7 @@ const Loadmap = () => {
       <img src="/campusMap.jpg" alt="Campus Map" className="loadmap__image" />
 
       <button
-        className="loadmap__building"
+        className="loadmap__building loadmap__building-09"
         style={{ top: '10.5%', left: '44.5%' }}
         onClick={() => handleBuildingClick(9)}
       >
@@ -28,7 +28,7 @@ const Loadmap = () => {
         56
       </button>
       <button
-        className="loadmap__building"
+        className="loadmap__building loadmap__building-06"
         style={{ top: '15.5%', left: '52.5%' }}
         onClick={() => handleBuildingClick(6)}
       >
@@ -49,7 +49,7 @@ const Loadmap = () => {
         05
       </button>
       <button
-        className="loadmap__building"
+        className="loadmap__building loadmap__building-11"
         style={{ top: '37.5%', left: '55%' }}
         onClick={() => handleBuildingClick(11)}
       >
@@ -77,7 +77,7 @@ const Loadmap = () => {
         26
       </button>
       <button
-        className="loadmap__building"
+        className="loadmap__building loadmap__building-07"
         style={{ top: '72.5%', left: '49%' }}
         onClick={() => handleBuildingClick(7)}
       >
