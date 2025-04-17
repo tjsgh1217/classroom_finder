@@ -27,17 +27,37 @@ import Build42 from './number_42/build_42';
 import Build45 from './number_45/build_45';
 import Build47 from './number_47/build_47';
 
-import Room090425 from './number_09/4F/room090425';
 import Room090106 from './number_09/1F/room090106';
 import Room090119 from './number_09/1F/room090119';
+import Room090201 from './number_09/2F/room090201';
+import Room090202 from './number_09/2F/room090202';
+import Room090206 from './number_09/2F/room090206';
+import Room090210 from './number_09/2F/room090210';
+import Room090215 from './number_09/2F/room090215';
 import Room090219 from './number_09/2F/room090219';
+import Room090221 from './number_09/2F/room090221';
+import Room090302 from './number_09/3F/room090302';
+import Room090305 from './number_09/3F/room090305';
+import Room090307 from './number_09/3F/room090307';
+import Room090316 from './number_09/3F/room090316';
+import Room090321 from './number_09/3F/room090321';
+import Room090325 from './number_09/3F/room090325';
 import Room090320 from './number_09/3F/room090320';
 import Room090327 from './number_09/3F/room090327';
+import Room090401 from './number_09/4F/room090401';
+import Room090402 from './number_09/4F/room090402';
+import Room090405 from './number_09/4F/room090405';
+import Room090424 from './number_09/4F/room090424';
 import Room090408 from './number_09/4F/room090408';
 import Room090409 from './number_09/4F/room090409';
 import Room090410 from './number_09/4F/room090410';
 import Room090411 from './number_09/4F/room090411';
 import Room090420 from './number_09/4F/room090420';
+import Room090425 from './number_09/4F/room090425';
+import Room090501 from './number_09/5F/room090501';
+import Room090502 from './number_09/5F/room090502';
+import Room090503 from './number_09/5F/room090503';
+import Room090505 from './number_09/5F/room090505';
 import Room090516 from './number_09/5F/room090516';
 import Room090517 from './number_09/5F/room090517';
 import Room090518 from './number_09/5F/room090518';
@@ -280,14 +300,34 @@ function RoomRouter() {
     '090425': <Room090425 />,
     '090106': <Room090106 />,
     '090119': <Room090119 />,
+    '090201': <Room090201 />,
+    '090202': <Room090202 />,
+    '090206': <Room090206 />,
+    '090210': <Room090210 />,
+    '090215': <Room090215 />,
     '090219': <Room090219 />,
+    '090221': <Room090221 />,
+    '090302': <Room090302 />,
+    '090305': <Room090305 />,
+    '090307': <Room090307 />,
+    '090316': <Room090316 />,
+    '090321': <Room090321 />,
+    '090325': <Room090325 />,
     '090320': <Room090320 />,
     '090327': <Room090327 />,
+    '090401': <Room090401 />,
+    '090402': <Room090402 />,
+    '090405': <Room090405 />,
+    '090424': <Room090424 />,
     '090408': <Room090408 />,
     '090409': <Room090409 />,
     '090410': <Room090410 />,
     '090411': <Room090411 />,
     '090420': <Room090420 />,
+    '090501': <Room090501 />,
+    '090502': <Room090502 />,
+    '090503': <Room090503 />,
+    '090505': <Room090505 />,
     '090516': <Room090516 />,
     '090517': <Room090517 />,
     '090518': <Room090518 />,
