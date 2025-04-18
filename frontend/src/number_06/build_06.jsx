@@ -17,7 +17,7 @@ const Build06 = () => {
     2: [1, 12, 13, 17, 25, 28, 30],
     3: [11, 26, 34, 35],
     4: [2, 3, 4, 5, 6, 7, 9, 10, 17, 19, 20, 24, 33],
-    5: [1, 3, 4, 5, 6, 10, 11, 17, 20, 26, 27, 28, 29],
+    5: [1, 3, 4, 5, 6, 9, 10, 11, 17, 20, 26, 27, 28, 29],
   };
 
   const availableRooms = [
@@ -54,6 +54,7 @@ const Build06 = () => {
     '060504',
     '060505',
     '060506',
+    '060509',
     '060510',
     '060511',
     '060517',
@@ -250,7 +251,6 @@ const Build06 = () => {
       <header className="building-header">
         <div className="header-content">
           <h1>{buildingId}번 건물 - 계의돈기념관</h1>
-          <p>현재 시간: {new Date().toLocaleTimeString('ko-KR')}</p>
         </div>
       </header>
 

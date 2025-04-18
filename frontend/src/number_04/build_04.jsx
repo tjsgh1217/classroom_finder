@@ -236,7 +236,6 @@ const Build04 = () => {
       <header className="building-header">
         <div className="header-content">
           <h1>{buildingId}번 건물 - 문과대학</h1>
-          <p>현재 시간: {new Date().toLocaleTimeString('ko-KR')}</p>
         </div>
       </header>
 
