@@ -203,7 +203,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/gonggangroom/dev/1744906890327-2025-04-17T16:21:30.327Z/api.zip"
+                "S3Key": "serverless/gonggangroom/dev/1744950691151-2025-04-18T04:31:31.151Z/api.zip"
               },
               "Handler": "src/lambda.handler",
               "Runtime": "nodejs18.x",
@@ -453,7 +453,7 @@
               "ApiLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1744906785816": {
+          "ApiGatewayDeployment1744950588110": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -735,7 +735,7 @@
       "package": {
         "individually": true,
         "artifactsS3KeyDirname": "serverless/gonggangroom/dev/code-artifacts",
-        "artifactDirectoryName": "serverless/gonggangroom/dev/1744906890327-2025-04-17T16:21:30.327Z"
+        "artifactDirectoryName": "serverless/gonggangroom/dev/1744950691151-2025-04-18T04:31:31.151Z"
       }
     },
     "layers": {},
@@ -743,7 +743,7 @@
   },
   "package": {
     "individually": true,
-    "artifactDirectoryName": "serverless/gonggangroom/dev/1744906890327-2025-04-17T16:21:30.327Z",
+    "artifactDirectoryName": "serverless/gonggangroom/dev/1744950691151-2025-04-18T04:31:31.151Z",
     "artifact": ""
   }
 }

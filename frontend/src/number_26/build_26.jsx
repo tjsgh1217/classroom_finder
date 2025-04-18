@@ -8,12 +8,13 @@ const Build26 = () => {
   const navigate = useNavigate();
 
   const floorRoomNumbers = {
-    1: [],
+    1: [7],
     2: [14, 15, 16, 22, 23, 28, 29],
     3: [],
   };
 
   const availableRooms = [
+    '260107',
     '260214',
     '260215',
     '260216',

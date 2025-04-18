@@ -8,6 +8,7 @@ const Build09 = () => {
   const navigate = useNavigate();
 
   const floorRoomNumbers = {
+    B1: [8, 10],
     1: [6, 19],
     2: [1, 2, 6, 10, 15, 21, 19],
     3: [2, 5, 7, 16, 20, 21, 25, 27],
@@ -16,6 +17,8 @@ const Build09 = () => {
   };
 
   const availableRooms = [
+    '09B108',
+    '09B110',
     '090106',
     '090119',
     '090201',
@@ -85,7 +88,7 @@ const Build09 = () => {
       <div className="content-wrapper">
         <div className="floor-selector">
           <div className="floor-buttons">
-            {[1, 2, 3, 4, 5].map((floor) => (
+            {['B1', 1, 2, 3, 4, 5].map((floor) => (
               <button
                 key={floor}
                 className={`floor-button ${

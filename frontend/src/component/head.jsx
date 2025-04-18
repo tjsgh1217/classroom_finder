@@ -19,7 +19,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
   return (
     <header className="header">
       <div className="header__container">
-        <Link to="/" className="header__logo">
+        <Link to="/loadmap" className="header__logo">
           <img
             src="/service_logo.png"
             alt="공강룸 로고"
@@ -27,9 +27,9 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
           />
         </Link>
         <nav className="header__nav">
-          <Link to="/loadmap" className="header__link">
+          {/* <Link to="/loadmap" className="header__link">
             캠퍼스 맵
-          </Link>
+          </Link> */}
           {isLoggedIn ? (
             <>
               {/* <Link to="/loadmap" className="header__link">
@@ -42,11 +42,10 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
                 로그아웃
               </button>
             </>
-          ) : (
-            <Link to="/component/signup" className="header__button">
-              회원가입
-            </Link>
-          )}
+          ) : // <Link to="/component/signup" className="header__button">
+          //   회원가입
+          // </Link>
+          null}
         </nav>
       </div>
     </header>
