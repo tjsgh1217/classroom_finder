@@ -306,6 +306,25 @@ body {
   background-color: #f7f7f7;
   color: var(--text-light);
 }
+.room-status.occupied {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+.room-status.available {
+  background-color: #51cf66;
+  color: white;
+}
+
+.room-status.unavailable {
+  background-color: #adb5bd;
+  color: white;
+}
+
+.building-header p {
+  color: white;
+  margin-top: 0;
+}
 
 @media (max-width: 768px) {
   .building-header h1 {
