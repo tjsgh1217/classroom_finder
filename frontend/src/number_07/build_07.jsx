@@ -268,6 +268,10 @@ const Build07 = () => {
 
         <div className="floor-info">
           <h2>{selectedFloor}층 강의실</h2>
+          <div className="warning-banner">
+            ⚠️ 일부 강의실은 외부인 출입이 제한됩니다. 무단 출입 시 퇴장 조치가
+            이루어질 수 있습니다.
+          </div>
           <p className="floor-description">이용 가능한 강의실 목록입니다</p>
         </div>
 

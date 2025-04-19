@@ -12,6 +12,7 @@ import Header from './component/head';
 import Loadmap from './component/Loadmap';
 import Mypage from './component/mypage';
 import Signup from './component/signup';
+import Footer from './component/footer';
 
 import Build09 from './number_09/build_09';
 import Build56 from './number_56/build_56';
@@ -803,6 +804,7 @@ function AppRoutes() {
           element={<ProtectedRoute element={<Mypage />} />}
         />
       </Routes>
+      <Footer />
     </>
   );
 }
