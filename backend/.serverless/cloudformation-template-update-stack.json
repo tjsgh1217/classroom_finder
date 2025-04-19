@@ -177,7 +177,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/gonggangroom/dev/1744950691151-2025-04-18T04:31:31.151Z/api.zip"
+          "S3Key": "serverless/gonggangroom/dev/1744989954426-2025-04-18T15:25:54.426Z/api.zip"
         },
         "Handler": "src/lambda.handler",
         "Runtime": "nodejs18.x",
@@ -427,7 +427,7 @@
         "ApiLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1744950588110": {
+    "ApiGatewayDeployment1744989842529": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
