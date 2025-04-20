@@ -1,0 +1,133 @@
+.footer {
+  background-color: #ffffff;
+  padding: 1.2rem 0;
+  border-top: 1px solid #eaeaea;
+  width: 100%;
+  margin-top: auto;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.footer-info {
+  margin-right: -5rem;
+}
+
+.footer-info p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.contact-label {
+  font-weight: 500;
+  margin-right: 0.5rem;
+  color: #111;
+  position: relative;
+  margin-left: 0;
+}
+
+.contact-label::after {
+  content: '—';
+  margin: 0 0.5rem;
+  color: #ddd;
+}
+
+.footer-info a {
+  color: #333;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.footer-info a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: #333;
+  transition: width 0.3s ease;
+}
+
+.footer-info a:hover {
+  color: #000;
+}
+
+.footer-info a:hover::after {
+  width: 100%;
+}
+@media (max-width: 1024px) and (min-width: 769px) {
+  .footer-info {
+    margin-right: 0rem;
+  }
+
+  .footer-container {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 481px) {
+  .footer-info {
+    margin-right: 0rem;
+  }
+
+  .footer-container {
+    padding: 0 1.2rem;
+  }
+
+  .footer-info p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-content {
+    justify-content: center;
+  }
+
+  .footer-info {
+    margin-right: 0;
+  }
+
+  .footer-container {
+    padding: 0 1rem;
+  }
+
+  .footer-info p {
+    font-size: 0.85rem;
+  }
+
+  .contact-label {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .footer-info p {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .contact-label {
+    margin-bottom: 0.3rem;
+  }
+
+  .contact-label::after {
+    display: none;
+  }
+}

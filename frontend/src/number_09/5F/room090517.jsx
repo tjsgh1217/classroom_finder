@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import API from '../../api.ts';
 import '../../component/room_style.css';
 
 const ClassRoom = () => {
@@ -93,9 +93,7 @@ const ClassRoom = () => {
     const fetchLectureData = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(
-          `http://localhost:8080/courses?room=${roomId}-0`
-        );
+        const response = await API.get(`/courses?room=${roomId}-0`);
 
         const courseData = response.data;
 

@@ -9,16 +9,14 @@ import {
 
 const tableName = 'Courses';
 
-// 1) AWS SDK v3 클라이언트 생성
 const client = new DynamoDBClient({
   region: process.env.AWS_REGION || 'ap-northeast-2',
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
-  },
+  // credentials: {
+  //   accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+  //   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+  // },
 });
 
-// 2) DocumentClient 스타일 래퍼 생성
 const db = DynamoDBDocumentClient.from(client);
 
 const itemsMap = new Map<string, any>();
@@ -70,3 +68,5 @@ fs.createReadStream(__dirname + '/courses.csv')
   .on('error', (err) => {
     console.error('CSV 읽기 중 오류:', err);
   });
+
+// npx ts-node src/importCourses.ts

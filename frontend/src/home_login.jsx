@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
 import './home_login.css';
+import API from '../src/api.ts';
 
 const UserInfoCard = ({ user }) => (
   <div className="login-card user-profile-card">
-    <div className="login-header">
-      <h1 className="login-title">내 정보</h1>
-    </div>
     <div className="user-info-content">
       <div className="user-avatar">
         <span className="avatar-text">{user.name.charAt(0)}</span>
@@ -52,13 +49,17 @@ const LoginForm = ({
             id="studentId"
             autoComplete="current-studentId"
             value={studentId}
-            onChange={(e) => setStudentId(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (/^\d*$/.test(value) && value.length <= 8) {
+                setStudentId(value);
+              }
+            }}
             placeholder="학번을 입력하세요."
             required
           />
         </div>
       </div>
-
       <div className="form-field">
         <label htmlFor="password">Password</label>
         <div className="input-container">
@@ -90,9 +91,8 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
 
   const fetchUserInfo = async (token) => {
     try {
-      const res = await axios.get('http://localhost:8080/auth/me', {
+      const res = await API.get('/auth/me', {
         headers: { Authorization: `Bearer ${token}` },
-        withCredentials: true,
       });
 
       const userInfo = res.data.user;
@@ -128,7 +128,7 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
       setError('');
 
       try {
-        const res = await axios.post('http://localhost:8080/auth/login', {
+        const res = await API.post('/auth/login', {
           studentId,
           password,
         });
@@ -172,23 +172,35 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
           </div>
           <div className="notice-content">
             <div className="notice-item">
-              <h3>25.04.04 시간표 업데이트</h3>
-              <p>11번 건물 강의실 시간표 업데이트 완료</p>
-              <span className="notice-date">2025.04.04</span>
+              <h3>서비스 이용 방법</h3>
+              <p>우측 상단에 캠퍼스 맵 클릭</p>
+              <p>건물 번호 클릭</p>
+              <p>층과 강의실 클릭</p>
+              <span className="notice-date">2025.04.16</span>
             </div>
             <div className="notice-item">
-              <h3>25.04.04 시간표 업데이트</h3>
-              <p>11번 건물 강의실 시간표 업데이트 완료</p>
-              <p>11번 건물 강의실 시간표 업데이트 완료</p>
-              <p>11번 건물 강의실 시간표 업데이트 완료</p>
-              <p>11번 건물 강의실 시간표 업데이트 완료</p>
-              <p>11번 건물 강의실 시간표 업데이트 완료</p>
-              <span className="notice-date">2025.04.04</span>
+              <h3>강의실 목록 안내사항</h3>
+              <p>실험실, 실습실 일부 제외</p>
+              <p>다목적 강의실 제외</p>
+              <span className="notice-date">2025.04.15</span>
             </div>
             <div className="notice-item">
-              <h3>25.04.04 시간표 업데이트</h3>
+              <h3>시간표 업데이트</h3>
+              <p>06번 건물 강의실 시간표 업데이트 완료</p>
+              <p>09번 건물 강의실 시간표 업데이트 완료</p>
+              <p>02번 건물 강의실 시간표 업데이트 완료</p>
+              <p>05번 건물 강의실 시간표 업데이트 완료</p>
               <p>11번 건물 강의실 시간표 업데이트 완료</p>
-              <span className="notice-date">2025.04.04</span>
+              <p>03번 건물 강의실 시간표 업데이트 완료</p>
+              <p>04번 건물 강의실 시간표 업데이트 완료</p>
+              <p>56번 건물 강의실 시간표 업데이트 완료</p>
+              <p>26번 건물 강의실 시간표 업데이트 완료</p>
+              <p>07번 건물 강의실 시간표 업데이트 완료</p>
+              <p>42번 건물 강의실 시간표 업데이트 완료</p>
+              <p>45번 건물 강의실 시간표 업데이트 완료</p>
+              <p>47번 건물 강의실 시간표 업데이트 완료</p>
+              <p>50번 건물 강의실 시간표 업데이트 완료</p>
+              <span className="notice-date">2025.04.10</span>
             </div>
           </div>
         </div>

@@ -6,7 +6,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import {
@@ -22,7 +22,6 @@ interface User {
   password: string;
   name: string;
   department: string;
-  createdAt?: string;
 }
 
 @Injectable()
@@ -38,14 +37,14 @@ export class AuthService {
     this.jwtSecret =
       this.configService.get<string>('JWT_SECRET') || 'MY_SECRET';
 
-    const accessKeyId = this.configService.get<string>('AWS_ACCESS_KEY_ID')!;
-    const secretAccessKey = this.configService.get<string>(
-      'AWS_SECRET_ACCESS_KEY',
-    )!;
+    // const accessKeyId = this.configService.get<string>('AWS_ACCESS_KEY_ID')!;
+    // const secretAccessKey = this.configService.get<string>(
+    //   'AWS_SECRET_ACCESS_KEY',
+    // )!;
 
     const client = new DynamoDBClient({
       region,
-      credentials: { accessKeyId, secretAccessKey },
+      // credentials: { accessKeyId, secretAccessKey },
     });
     this.db = DynamoDBDocumentClient.from(client);
   }
@@ -56,8 +55,10 @@ export class AuthService {
   }
 
   private validatePassword(password: string): boolean {
-    const regex = /[!@#$%^&*(),.?":{}|<>]/;
-    return regex.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    const validCharsOnly = /^[A-Za-z0-9!@#$%^&*(),.?":{}|<>]+$/.test(password);
+
+    return hasSpecialChar && validCharsOnly;
   }
 
   async signUp(
@@ -71,7 +72,9 @@ export class AuthService {
     }
 
     if (!this.validatePassword(password)) {
-      throw new BadRequestException('비밀번호는 특수문자를 포함해야 합니다.');
+      throw new BadRequestException(
+        '비밀번호는 영어, 숫자, 특수문자만 사용 가능하며, 특수문자를 반드시 포함해야 합니다.',
+      );
     }
 
     if (await this.getUser(studentId)) {
@@ -84,7 +87,6 @@ export class AuthService {
       password: hashed,
       name,
       department,
-      createdAt: new Date().toISOString(),
     };
 
     await this.db.send(
@@ -137,7 +139,9 @@ export class AuthService {
     }
 
     if (!this.validatePassword(newPassword)) {
-      throw new BadRequestException('비밀번호는 특수문자를 포함해야 합니다.');
+      throw new BadRequestException(
+        '비밀번호는 영어, 숫자, 특수문자만 사용 가능하며, 특수문자를 반드시 포함해야 합니다.',
+      );
     }
 
     const hashed = await bcrypt.hash(newPassword, 10);
@@ -174,12 +178,12 @@ export class AuthService {
     return { message: '내 정보 조회 성공', user: profile };
   }
 
-  async findUser(studentId: string) {
-    const user = await this.getUser(studentId);
-    if (!user) throw new NotFoundException('사용자를 찾을 수 없습니다.');
-    const { password, ...profile } = user;
-    return { message: '사용자 조회 성공', user: profile };
-  }
+  // async findUser(studentId: string) {
+  //   const user = await this.getUser(studentId);
+  //   if (!user) throw new NotFoundException('사용자를 찾을 수 없습니다.');
+  //   const { password, ...profile } = user;
+  //   return { message: '사용자 조회 성공', user: profile };
+  // }
 
   private async getUser(studentId: string): Promise<User | null> {
     const { Item } = await this.db.send(
