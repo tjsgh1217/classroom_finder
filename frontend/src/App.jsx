@@ -13,6 +13,7 @@ import Loadmap from './component/Loadmap';
 import Mypage from './component/mypage';
 import Signup from './component/signup';
 import Footer from './component/footer';
+import SecondLoadmap from './component/s_Loadmap';
 
 import Build09 from './number_09/build_09';
 import Build56 from './number_56/build_56';
@@ -28,6 +29,11 @@ import Build50 from './number_50/build_50';
 import Build42 from './number_42/build_42';
 import Build45 from './number_45/build_45';
 import Build47 from './number_47/build_47';
+import Build71 from './number_71/build_71';
+import Build72 from './number_72/build_72';
+import Build73 from './number_73/build_73';
+import Build74 from './number_74/build_74';
+import Build78 from './number_78/build_78';
 
 import Room09B108 from './number_09/B1F/room09B108';
 import Room09B110 from './number_09/B1F/room09B110';
@@ -357,6 +363,47 @@ import Room070512 from './number_07/5F/room070512';
 import Room070517 from './number_07/5F/room070517';
 import Room070518 from './number_07/5F/room070518';
 import Room070519 from './number_07/5F/room070519';
+
+import Room710101 from './number_71/1F/room710101';
+import Room710118 from './number_71/1F/room710118';
+
+import Room720106 from './number_72/1F/room720106';
+import Room720107 from './number_72/1F/room720107';
+import Room720116 from './number_72/1F/room720116';
+import Room720124 from './number_72/1F/room720124';
+import Room720125 from './number_72/1F/room720125';
+import Room720126 from './number_72/1F/room720126';
+import Room720128 from './number_72/1F/room720128';
+import Room720129 from './number_72/1F/room720129';
+import Room720130 from './number_72/1F/room720130';
+import Room720132 from './number_72/1F/room720132';
+import Room720136 from './number_72/1F/room720136';
+import Room720137 from './number_72/1F/room720137';
+import Room720162 from './number_72/1F/room720162';
+import Room720208 from './number_72/2F/room720208';
+import Room720225 from './number_72/2F/room720225';
+import Room720226 from './number_72/2F/room720226';
+
+import Room730106 from './number_73/1F/room730106';
+import Room730112 from './number_73/1F/room730112';
+import Room730116 from './number_73/1F/room730116';
+import Room730124 from './number_73/1F/room730124';
+import Room730126 from './number_73/1F/room730126';
+import Room730127 from './number_73/1F/room730127';
+import Room730128 from './number_73/1F/room730128';
+import Room730129 from './number_73/1F/room730129';
+import Room730130 from './number_73/1F/room730130';
+import Room730131 from './number_73/1F/room730131';
+import Room730132 from './number_73/1F/room730132';
+import Room730133 from './number_73/1F/room730133';
+
+import Room740201 from './number_74/2F/room740201';
+import Room740202 from './number_74/2F/room740202';
+import Room740204 from './number_74/2F/room740204';
+
+import Room780112 from './number_78/1F/room780112';
+import Room780113 from './number_78/1F/room780113';
+import Room780114 from './number_78/1F/room780114';
 
 function RoomRouter() {
   const { roomId } = useParams();
@@ -690,6 +737,47 @@ function RoomRouter() {
     '070517': <Room070517 />,
     '070518': <Room070518 />,
     '070519': <Room070519 />,
+
+    710101: <Room710101 />,
+    710118: <Room710118 />,
+
+    720106: <Room720106 />,
+    720107: <Room720107 />,
+    720116: <Room720116 />,
+    720124: <Room720124 />,
+    720125: <Room720125 />,
+    720126: <Room720126 />,
+    720128: <Room720128 />,
+    720129: <Room720129 />,
+    720130: <Room720130 />,
+    720132: <Room720132 />,
+    720136: <Room720136 />,
+    720137: <Room720137 />,
+    720162: <Room720162 />,
+    720208: <Room720208 />,
+    720225: <Room720225 />,
+    720226: <Room720226 />,
+
+    730106: <Room730106 />,
+    730112: <Room730112 />,
+    730116: <Room730116 />,
+    730124: <Room730124 />,
+    730126: <Room730126 />,
+    730127: <Room730127 />,
+    730128: <Room730128 />,
+    730129: <Room730129 />,
+    730130: <Room730130 />,
+    730131: <Room730131 />,
+    730132: <Room730132 />,
+    730133: <Room730133 />,
+
+    740201: <Room740201 />,
+    740202: <Room740202 />,
+    740204: <Room740204 />,
+
+    780112: <Room780112 />,
+    780113: <Room780113 />,
+    780114: <Room780114 />,
   };
 
   return roomComponents[roomId] || <div>해당 방을 찾을 수 없습니다.</div>;
@@ -712,6 +800,11 @@ function BuildingRouter() {
   if (buildingId === '42') return <Build42 />;
   if (buildingId === '45') return <Build45 />;
   if (buildingId === '47') return <Build47 />;
+  if (buildingId === '71') return <Build71 />;
+  if (buildingId === '72') return <Build72 />;
+  if (buildingId === '73') return <Build73 />;
+  if (buildingId === '74') return <Build74 />;
+  if (buildingId === '78') return <Build78 />;
 }
 const AuthContext = createContext();
 function useAuth() {
@@ -792,6 +885,7 @@ function AppRoutes() {
           }
         /> */}
         <Route path="/loadmap" element={<Loadmap />} />
+        <Route path="/s_loadmap" element={<SecondLoadmap />} />
         <Route path="/component/signup" element={<Signup />} />
         <Route path="/building/:buildingId" element={<BuildingRouter />} />
         <Route

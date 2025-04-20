@@ -68,7 +68,7 @@ body {
 .content-wrapper {
   background-color: var(--bg-white);
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  margin-top: 20px;
+  margin-top: 7px;
   padding: 30px 20px 60px;
   box-shadow: var(--shadow-lg);
   min-height: calc(100vh - 200px);
