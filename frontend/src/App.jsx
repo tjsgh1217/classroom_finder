@@ -5,6 +5,7 @@ import {
   useParams,
   useNavigate,
   Navigate,
+  useLocation,
 } from 'react-router-dom';
 import React, { useState, useEffect, createContext, useContext } from 'react';
 // import Login from './home_login';
@@ -871,6 +872,9 @@ function ProtectedRoute({ element }) {
 
 function AppRoutes() {
   const { isLoggedIn, setIsLoggedIn } = useAuth();
+  const location = useLocation();
+  const hideFooterPaths = ['/loadmap', '/s_Loadmap'];
+  const shouldShowFooter = !hideFooterPaths.includes(location.pathname);
 
   return (
     <>
@@ -898,7 +902,7 @@ function AppRoutes() {
           element={<ProtectedRoute element={<Mypage />} />}
         />
       </Routes>
-      <Footer />
+      {shouldShowFooter && <Footer />}
     </>
   );
 }

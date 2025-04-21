@@ -177,7 +177,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/gonggangroom/dev/1744989954426-2025-04-18T15:25:54.426Z/api.zip"
+          "S3Key": "serverless/gonggangroom/dev/1745208583026-2025-04-21T04:09:43.026Z/api.zip"
         },
         "Handler": "src/lambda.handler",
         "Runtime": "nodejs18.x",
@@ -202,14 +202,14 @@
         "ApiLogGroup"
       ]
     },
-    "ApiLambdaVersionHSkkCqU2xWKBGmq0DuD62TVXhqIzThdUOBvySsNQYQ": {
+    "ApiLambdaVersionTAeNVFFyhWA4ocI3QuEhaYRRUYcaGe6lHrq9ePUzI4": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "ApiLambdaFunction"
         },
-        "CodeSha256": "gl22gfC/N1GPJw68UKDkqYX6xW7ojNnV1lS7XpM7YmI="
+        "CodeSha256": "GICpa0sx4mtsPfuVRFCLvsHvEnzlVCD7HZsjQjxMByE="
       }
     },
     "ApiGatewayRestApi": {
@@ -427,7 +427,7 @@
         "ApiLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1744989842529": {
+    "ApiGatewayDeployment1745208468782": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -492,7 +492,7 @@
     "ApiLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "ApiLambdaVersionHSkkCqU2xWKBGmq0DuD62TVXhqIzThdUOBvySsNQYQ"
+        "Ref": "ApiLambdaVersionTAeNVFFyhWA4ocI3QuEhaYRRUYcaGe6lHrq9ePUzI4"
       },
       "Export": {
         "Name": "sls-gonggangroom-dev-ApiLambdaFunctionQualifiedArn"

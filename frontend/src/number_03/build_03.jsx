@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import API from '../api.ts';
 import '../component/build.css';
+import { toZonedTime } from 'date-fns-tz';
 
 const Build03 = () => {
   const { buildingId } = useParams();
@@ -120,12 +121,13 @@ const Build03 = () => {
     if (!roomSchedules[roomCode]) return false;
 
     const now = new Date();
+    const koreaTime = toZonedTime(now, 'Asia/Seoul');
 
     const daysMap = ['일', '월', '화', '수', '목', '금', '토'];
-    const currentDay = daysMap[now.getDay()];
+    const currentDay = daysMap[koreaTime.getDay()];
 
-    const currentHour = now.getHours();
-    const currentMinute = now.getMinutes();
+    const currentHour = koreaTime.getHours();
+    const currentMinute = koreaTime.getMinutes();
     const currentTimeInMinutes = currentHour * 60 + currentMinute;
 
     const todayLectures = roomSchedules[roomCode][currentDay] || [];
@@ -148,43 +150,36 @@ const Build03 = () => {
     const fetchAllRoomSchedules = async () => {
       try {
         setLoading(true);
+        const schedules = {};
 
-        const promises = availableRooms.map((roomCode) =>
-          API.get(`/courses?room=${roomCode}-0`)
-            .then((response) => {
-              const courseData = response.data;
-              const lecturesByDay = {};
+        for (const roomCode of availableRooms) {
+          try {
+            const response = await API.get(`/courses?room=${roomCode}-0`);
+            const courseData = response.data;
+            const lecturesByDay = {};
 
-              courseData.forEach((course) => {
-                const timeSlots = parseTimeCode(course.time);
+            courseData.forEach((course) => {
+              const timeSlots = parseTimeCode(course.time);
 
-                timeSlots.forEach((slot) => {
-                  if (!lecturesByDay[slot.day]) {
-                    lecturesByDay[slot.day] = [];
-                  }
+              timeSlots.forEach((slot) => {
+                if (!lecturesByDay[slot.day]) {
+                  lecturesByDay[slot.day] = [];
+                }
 
-                  lecturesByDay[slot.day].push({
-                    start: slot.start,
-                    end: slot.end,
-                    title: course.courseName,
-                  });
+                lecturesByDay[slot.day].push({
+                  start: slot.start,
+                  end: slot.end,
+                  title: course.courseName,
                 });
               });
+            });
 
-              return { roomCode, schedules: lecturesByDay };
-            })
-            .catch((err) => {
-              console.error(`${roomCode} 데이터 가져오기 실패:`, err);
-              return { roomCode, schedules: {} };
-            })
-        );
-
-        const results = await Promise.all(promises);
-
-        const schedules = {};
-        results.forEach((result) => {
-          schedules[result.roomCode] = result.schedules;
-        });
+            schedules[roomCode] = lecturesByDay;
+          } catch (err) {
+            console.error(`${roomCode} 데이터 가져오기 실패:`, err);
+            schedules[roomCode] = {};
+          }
+        }
 
         setRoomSchedules(schedules);
         setLoading(false);
