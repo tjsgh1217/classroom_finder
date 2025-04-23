@@ -10,7 +10,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { Request } from 'express';
-
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './jwt-auth.guard';
 
@@ -65,15 +64,18 @@ export class AuthController {
     return this.authService.deleteUser(studentId, body.password);
   }
 
+  // 내 정보 조회: GET /auth/me (인증 필요)
   @UseGuards(JwtAuthGuard)
   @Get('me')
   async getMyInfo(@Req() request: Request) {
     const studentId = (request as any).user.studentId;
+    // service가 { message, user: Profile }을 반환
     return this.authService.getMyInfo(studentId);
   }
 
-  // @Get('user/:studentId')
-  // async findUser(@Param('studentId') studentId: string) {
-  //   return this.authService.findUser(studentId);
-  // }
+  // 공개 사용자 조회: GET /auth/user/:studentId
+  @Get('user/:studentId')
+  async findUser(@Param('studentId') studentId: string) {
+    return this.authService.findUser(studentId);
+  }
 }
