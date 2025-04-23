@@ -150,7 +150,7 @@ const Build03 = () => {
     const fetchBuildingSchedules = async () => {
       try {
         setLoading(true);
-        const response = await API.get(`/courses/building?code=09`);
+        const response = await API.get(`/courses/building?code=03`);
         const buildingData = response.data;
 
         const schedules = {};
@@ -236,6 +236,10 @@ const Build03 = () => {
 
         <div className="floor-info">
           <h2>{selectedFloor}층 강의실</h2>
+          <div className="warning-banner">
+            ⚠️ 사범대학 규정상 강의실 사용이 필요하신 경우 사전에 강의실 대여
+            신청서를 제출한 후 사용해주시기 바랍니다.
+          </div>
           <p className="floor-description">이용 가능한 강의실 목록입니다</p>
         </div>
 

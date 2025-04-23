@@ -164,7 +164,7 @@ const Build04 = () => {
     const fetchBuildingSchedules = async () => {
       try {
         setLoading(true);
-        const response = await API.get(`/courses/building?code=09`);
+        const response = await API.get(`/courses/building?code=04`);
         const buildingData = response.data;
 
         const schedules = {};
@@ -250,6 +250,7 @@ const Build04 = () => {
 
         <div className="floor-info">
           <h2>{selectedFloor}층 강의실</h2>
+
           <p className="floor-description">이용 가능한 강의실 목록입니다</p>
         </div>
 

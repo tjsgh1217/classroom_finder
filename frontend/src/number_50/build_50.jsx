@@ -158,7 +158,7 @@ const Build50 = () => {
     const fetchBuildingSchedules = async () => {
       try {
         setLoading(true);
-        const response = await API.get(`/courses/building?code=09`);
+        const response = await API.get(`/courses/building?code=50`);
         const buildingData = response.data;
 
         const schedules = {};
