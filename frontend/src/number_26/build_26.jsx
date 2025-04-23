@@ -130,21 +130,21 @@ const Build26 = () => {
   };
 
   useEffect(() => {
-    const fetchAllRoomSchedules = async () => {
+    const fetchBuildingSchedules = async () => {
       try {
         setLoading(true);
+        const response = await API.get(`/courses/building?code=09`);
+        const buildingData = response.data;
+
         const schedules = {};
+        Object.entries(buildingData).forEach(([roomCode, courses]) => {
+          const lecturesByDay = {};
 
-        for (const roomCode of availableRooms) {
-          try {
-            const response = await API.get(`/courses?room=${roomCode}-0`);
-            const courseData = response.data;
-            const lecturesByDay = {};
+          courses.forEach((course) => {
+            const timeSlots = parseTimeCode(course.time);
 
-            courseData.forEach((course) => {
-              const timeSlots = parseTimeCode(course.time);
-
-              timeSlots.forEach((slot) => {
+            timeSlots.forEach((slot) => {
+              if (slot) {
                 if (!lecturesByDay[slot.day]) {
                   lecturesByDay[slot.day] = [];
                 }
@@ -154,15 +154,12 @@ const Build26 = () => {
                   end: slot.end,
                   title: course.courseName,
                 });
-              });
+              }
             });
+          });
 
-            schedules[roomCode] = lecturesByDay;
-          } catch (err) {
-            console.error(`${roomCode} 데이터 가져오기 실패:`, err);
-            schedules[roomCode] = {};
-          }
-        }
+          schedules[roomCode.split('-')[0]] = lecturesByDay;
+        });
 
         setRoomSchedules(schedules);
         setLoading(false);
@@ -173,7 +170,7 @@ const Build26 = () => {
       }
     };
 
-    fetchAllRoomSchedules();
+    fetchBuildingSchedules();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

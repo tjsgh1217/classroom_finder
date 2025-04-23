@@ -59,6 +59,7 @@ import Room090401 from './number_09/4F/room090401';
 import Room090402 from './number_09/4F/room090402';
 import Room090405 from './number_09/4F/room090405';
 import Room090424 from './number_09/4F/room090424';
+import Room090421 from './number_09/4F/room090421';
 import Room090408 from './number_09/4F/room090408';
 import Room090409 from './number_09/4F/room090409';
 import Room090410 from './number_09/4F/room090410';
@@ -439,6 +440,7 @@ function RoomRouter() {
     '090410': <Room090410 />,
     '090411': <Room090411 />,
     '090420': <Room090420 />,
+    '090421': <Room090421 />,
     '090501': <Room090501 />,
     '090502': <Room090502 />,
     '090503': <Room090503 />,

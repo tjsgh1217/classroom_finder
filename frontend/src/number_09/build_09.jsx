@@ -17,7 +17,7 @@ const Build09 = () => {
     1: [6, 19],
     2: [1, 2, 6, 10, 15, 21, 19],
     3: [2, 5, 7, 16, 20, 21, 25, 27],
-    4: [1, 2, 5, 8, 9, 10, 11, 20, 24, 25],
+    4: [1, 2, 5, 8, 9, 10, 11, 20, 21, 24, 25],
     5: [1, 2, 3, 5, 16, 17, 18, 19, 20, 22, 24],
   };
 
@@ -44,6 +44,7 @@ const Build09 = () => {
     '090401',
     '090402',
     '090405',
+    '090421',
     '090424',
     '090408',
     '090409',
@@ -164,41 +165,36 @@ const Build09 = () => {
   };
 
   useEffect(() => {
-    const fetchAllRoomSchedules = async () => {
+    const fetchBuildingSchedules = async () => {
       try {
         setLoading(true);
+        const response = await API.get(`/courses/building?code=09`);
+        const buildingData = response.data;
+
         const schedules = {};
+        Object.entries(buildingData).forEach(([roomCode, courses]) => {
+          const lecturesByDay = {};
 
-        for (const roomCode of availableRooms) {
-          try {
-            const response = await API.get(`/courses?room=${roomCode}-0`);
-            const courseData = response.data;
-            const lecturesByDay = {};
+          courses.forEach((course) => {
+            const timeSlots = parseTimeCode(course.time);
 
-            courseData.forEach((course) => {
-              const timeSlots = parseTimeCode(course.time);
-
-              timeSlots.forEach((slot) => {
-                if (slot) {
-                  if (!lecturesByDay[slot.day]) {
-                    lecturesByDay[slot.day] = [];
-                  }
-
-                  lecturesByDay[slot.day].push({
-                    start: slot.start,
-                    end: slot.end,
-                    title: course.courseName,
-                  });
+            timeSlots.forEach((slot) => {
+              if (slot) {
+                if (!lecturesByDay[slot.day]) {
+                  lecturesByDay[slot.day] = [];
                 }
-              });
-            });
 
-            schedules[roomCode] = lecturesByDay;
-          } catch (err) {
-            console.error(`${roomCode} 데이터 가져오기 실패:`, err);
-            schedules[roomCode] = {};
-          }
-        }
+                lecturesByDay[slot.day].push({
+                  start: slot.start,
+                  end: slot.end,
+                  title: course.courseName,
+                });
+              }
+            });
+          });
+
+          schedules[roomCode.split('-')[0]] = lecturesByDay;
+        });
 
         setRoomSchedules(schedules);
         setLoading(false);
@@ -209,7 +205,7 @@ const Build09 = () => {
       }
     };
 
-    fetchAllRoomSchedules();
+    fetchBuildingSchedules();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
