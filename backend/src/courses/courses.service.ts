@@ -7,7 +7,7 @@ interface RawCourse {
   department: string;
   courseName: string;
   time: string;
-  room: string; 
+  room: string;
 }
 
 interface ScheduleItem {
@@ -20,7 +20,7 @@ export interface CourseWithTime {
   courseId: string;
   department: string;
   courseName: string;
-  time: string; 
+  time: string;
   room: string;
 }
 
@@ -47,8 +47,8 @@ export class CoursesService {
       let period: string;
       const m = token.match(/^([월화수목금])(.+)$/);
       if (m) {
-        dayKr = m[1];     
-        period = m[2];     
+        dayKr = m[1];
+        period = m[2];
 
         if (prevDay !== null) {
           roomIndex = Math.min(roomIndex + 1, rooms.length - 1);
@@ -67,16 +67,16 @@ export class CoursesService {
   }
   async findBlockByRoom(room: string): Promise<CourseWithTime[]> {
     const { Items } = await this.db.send(
-      new ScanCommand({ TableName: this.TABLE })
+      new ScanCommand({ TableName: this.TABLE }),
     );
     const raw = Items as RawCourse[];
     const out: CourseWithTime[] = [];
 
     for (const r of raw) {
       if (!r.room.replace(/\s+/g, '').split('/').includes(room)) continue;
-      const sched = this.parseSchedule(r).filter(s => s.room === room);
+      const sched = this.parseSchedule(r).filter((s) => s.room === room);
       const groups: Record<string, string[]> = {};
-      sched.forEach(s => {
+      sched.forEach((s) => {
         const key = `${s.dayKr}_${s.room}`;
         (groups[key] ||= []).push(s.period);
       });
@@ -100,5 +100,69 @@ export class CoursesService {
       return (order[dA] ?? 5) - (order[dB] ?? 5);
     });
     return out;
+  }
+  async findBlocksByBuilding(
+    buildingCode: string,
+  ): Promise<Record<string, CourseWithTime[]>> {
+    const { Items } = await this.db.send(
+      new ScanCommand({ TableName: this.TABLE }),
+    );
+    const raw = Items as RawCourse[];
+
+    const buildingRooms = new Set<string>();
+    raw.forEach((course) => {
+      const rooms = course.room.replace(/\s+/g, '').split('/');
+      rooms.forEach((room) => {
+        if (room.startsWith(buildingCode)) {
+          buildingRooms.add(room);
+        }
+      });
+    });
+
+    const result: Record<string, CourseWithTime[]> = {};
+
+    for (const room of buildingRooms) {
+      const roomCourses: CourseWithTime[] = [];
+
+      for (const r of raw) {
+        if (!r.room.replace(/\s+/g, '').split('/').includes(room)) continue;
+        const sched = this.parseSchedule(r).filter((s) => s.room === room);
+        const groups: Record<string, string[]> = {};
+
+        sched.forEach((s) => {
+          const key = `${s.dayKr}_${s.room}`;
+          (groups[key] ||= []).push(s.period);
+        });
+
+        for (const key in groups) {
+          const [dayKr, roomKey] = key.split('_');
+          roomCourses.push({
+            courseId: r.courseId,
+            department: r.department,
+            courseName: r.courseName,
+            time: `${dayKr}${groups[key].join('/')}`,
+            room: roomKey,
+          });
+        }
+      }
+
+      // 요일 순으로 정렬
+      const order: Record<string, number> = {
+        월: 0,
+        화: 1,
+        수: 2,
+        목: 3,
+        금: 4,
+      };
+      roomCourses.sort((a, b) => {
+        const dA = a.time.charAt(0);
+        const dB = b.time.charAt(0);
+        return (order[dA] ?? 5) - (order[dB] ?? 5);
+      });
+
+      result[room] = roomCourses;
+    }
+
+    return result;
   }
 }

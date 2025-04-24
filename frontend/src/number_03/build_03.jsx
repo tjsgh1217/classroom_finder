@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import API from '../api.ts';
 import '../component/build.css';
+import { toZonedTime } from 'date-fns-tz';
 
 const Build03 = () => {
   const { buildingId } = useParams();
@@ -120,12 +121,13 @@ const Build03 = () => {
     if (!roomSchedules[roomCode]) return false;
 
     const now = new Date();
+    const koreaTime = toZonedTime(now, 'Asia/Seoul');
 
     const daysMap = ['일', '월', '화', '수', '목', '금', '토'];
-    const currentDay = daysMap[now.getDay()];
+    const currentDay = daysMap[koreaTime.getDay()];
 
-    const currentHour = now.getHours();
-    const currentMinute = now.getMinutes();
+    const currentHour = koreaTime.getHours();
+    const currentMinute = koreaTime.getMinutes();
     const currentTimeInMinutes = currentHour * 60 + currentMinute;
 
     const todayLectures = roomSchedules[roomCode][currentDay] || [];
@@ -145,45 +147,35 @@ const Build03 = () => {
   };
 
   useEffect(() => {
-    const fetchAllRoomSchedules = async () => {
+    const fetchBuildingSchedules = async () => {
       try {
         setLoading(true);
-
-        const promises = availableRooms.map((roomCode) =>
-          API.get(`/courses?room=${roomCode}-0`)
-            .then((response) => {
-              const courseData = response.data;
-              const lecturesByDay = {};
-
-              courseData.forEach((course) => {
-                const timeSlots = parseTimeCode(course.time);
-
-                timeSlots.forEach((slot) => {
-                  if (!lecturesByDay[slot.day]) {
-                    lecturesByDay[slot.day] = [];
-                  }
-
-                  lecturesByDay[slot.day].push({
-                    start: slot.start,
-                    end: slot.end,
-                    title: course.courseName,
-                  });
-                });
-              });
-
-              return { roomCode, schedules: lecturesByDay };
-            })
-            .catch((err) => {
-              console.error(`${roomCode} 데이터 가져오기 실패:`, err);
-              return { roomCode, schedules: {} };
-            })
-        );
-
-        const results = await Promise.all(promises);
+        const response = await API.get(`/courses/building?code=03`);
+        const buildingData = response.data;
 
         const schedules = {};
-        results.forEach((result) => {
-          schedules[result.roomCode] = result.schedules;
+        Object.entries(buildingData).forEach(([roomCode, courses]) => {
+          const lecturesByDay = {};
+
+          courses.forEach((course) => {
+            const timeSlots = parseTimeCode(course.time);
+
+            timeSlots.forEach((slot) => {
+              if (slot) {
+                if (!lecturesByDay[slot.day]) {
+                  lecturesByDay[slot.day] = [];
+                }
+
+                lecturesByDay[slot.day].push({
+                  start: slot.start,
+                  end: slot.end,
+                  title: course.courseName,
+                });
+              }
+            });
+          });
+
+          schedules[roomCode.split('-')[0]] = lecturesByDay;
         });
 
         setRoomSchedules(schedules);
@@ -195,7 +187,7 @@ const Build03 = () => {
       }
     };
 
-    fetchAllRoomSchedules();
+    fetchBuildingSchedules();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -244,6 +236,10 @@ const Build03 = () => {
 
         <div className="floor-info">
           <h2>{selectedFloor}층 강의실</h2>
+          <div className="warning-banner">
+            ⚠️ 사범대학 규정상 강의실 사용이 필요하신 경우 사전에 강의실 대여
+            신청서를 제출한 후 사용해주시기 바랍니다.
+          </div>
           <p className="floor-description">이용 가능한 강의실 목록입니다</p>
         </div>
 
