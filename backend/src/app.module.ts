@@ -5,7 +5,6 @@ import { CoursesModule } from './courses/courses.module';
 
 @Module({
   imports: [
-    // .env 를 전역으로 사용
     ConfigModule.forRoot({
       isGlobal: true,
     }),
