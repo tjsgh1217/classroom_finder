@@ -6,7 +6,6 @@ import {
   Delete,
   Body,
   Req,
-  Param,
   UseGuards,
 } from '@nestjs/common';
 import { Request } from 'express';
@@ -47,8 +46,10 @@ export class AuthController {
     @Req() request: Request,
     @Body() body: { oldpassword: string; newpassword: string },
   ) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     const studentId = (request as any).user.studentId;
     return this.authService.changePassword(
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       studentId,
       body.oldpassword,
       body.newpassword,
@@ -61,14 +62,18 @@ export class AuthController {
     @Req() request: Request,
     @Body() body: { password: string },
   ) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     const studentId = (request as any).user.studentId;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return this.authService.deleteUser(studentId, body.password);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
   async getMyInfo(@Req() request: Request) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     const studentId = (request as any).user.studentId;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return this.authService.getMyInfo(studentId);
   }
 
