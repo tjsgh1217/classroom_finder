@@ -29,8 +29,11 @@ fs.createReadStream(__dirname + '/courses.csv')
     }),
   )
   .on('data', (row) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (!row.courseId) return;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
     itemsMap.set(row.courseId, {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       courseId: row.courseId,
       department: row.department,
       courseName: row.courseName,
