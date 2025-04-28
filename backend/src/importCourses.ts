@@ -33,19 +33,25 @@ fs.createReadStream(__dirname + '/courses.csv')
     if (!row.courseId) return;
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
     itemsMap.set(row.courseId, {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
       courseId: row.courseId,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
       department: row.department,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
       courseName: row.courseName,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
       time: row.time,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
       room: row.room,
     });
   })
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   .on('end', async () => {
     console.log('CSV 읽기 완료. 최종 항목 수 (중복 제거 후):', itemsMap.size);
 
     // PutRequest 배열 생성
     const items = Array.from(itemsMap.values()).map((item) => ({
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       PutRequest: { Item: item },
     }));
 
