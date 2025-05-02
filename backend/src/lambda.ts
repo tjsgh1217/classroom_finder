@@ -15,14 +15,17 @@ let cachedServer: Server;
 
 async function bootstrapServer(): Promise<Server> {
   if (!cachedServer) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     const expressApp = express();
     const nestApp = await NestFactory.create(
       AppModule,
       new ExpressAdapter(expressApp),
     );
     nestApp.enableCors();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     nestApp.use(eventContext());
     await nestApp.init();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     cachedServer = createServer(expressApp, undefined, binaryMimeTypes);
   }
   return cachedServer;
