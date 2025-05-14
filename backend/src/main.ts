@@ -11,4 +11,5 @@ async function bootstrap() {
   });
   await app.listen(8080, '0.0.0.0');
 }
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 bootstrap();
