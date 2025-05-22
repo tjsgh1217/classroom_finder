@@ -15,7 +15,9 @@ export class JwtAuthGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const request = context.switchToHttp().getRequest();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const authHeader = request.headers['authorization'];
     if (!authHeader) {
       throw new UnauthorizedException('인증 헤더가 없습니다.');
