@@ -17,11 +17,12 @@ export class JwtAuthGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const request = context.switchToHttp().getRequest();
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     const authHeader = request.headers['authorization'];
     if (!authHeader) {
       throw new UnauthorizedException('인증 헤더가 없습니다.');
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const parts = authHeader.split(' ');
     if (parts.length !== 2 || parts[0] !== 'Bearer') {
       throw new UnauthorizedException('잘못된 인증 헤더 형식입니다.');
