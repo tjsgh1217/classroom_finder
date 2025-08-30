@@ -65,6 +65,14 @@ const Build78 = () => {
           return { day, start: '18:00', end: '18:50' };
         case 11:
           return { day, start: '19:00', end: '19:50' };
+        case 12:
+          return { day, start: '20:00', end: '20:50' };
+        case 13:
+          return { day, start: '21:00', end: '21:50' };
+        case 14:
+          return { day, start: '22:00', end: '22:50' };
+        case 15:
+          return { day, start: '23:00', end: '23:50' };
 
         default:
           return null;
