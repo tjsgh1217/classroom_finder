@@ -174,6 +174,7 @@ export class AuthService {
   async getMyInfo(studentId: string) {
     const user = await this.getUser(studentId);
     if (!user) throw new NotFoundException('사용자를 찾을 수 없습니다.');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...profile } = user;
     return { message: '내 정보 조회 성공', user: profile };
   }

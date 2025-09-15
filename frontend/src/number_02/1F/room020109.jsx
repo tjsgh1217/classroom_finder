@@ -128,7 +128,7 @@ const ClassRoom = () => {
         setLectures(lecturesByDay);
         setLoading(false);
       } catch (err) {
-        console.error('강의 데이터를 가져오는 중 오류 발생:', err);
+        // console.error('강의 데이터를 가져오는 중 오류 발생:', err);
         setError('강의 데이터를 불러올 수 없습니다.');
         setLoading(false);
       }

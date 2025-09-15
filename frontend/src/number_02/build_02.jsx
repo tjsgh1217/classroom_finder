@@ -13,7 +13,7 @@ const Build02 = () => {
   const navigate = useNavigate();
 
   const floorRoomNumbers = {
-    1: [1],
+    1: [1, 9],
     2: [2, 3, 4, 5, 10, 11, 12],
     3: [1, 5, 11, 12, 13],
     4: [1, 2, 3, 5, 6, 7, 8],
@@ -21,6 +21,7 @@ const Build02 = () => {
 
   const availableRooms = [
     '020101',
+    '020109',
     '020202',
     '020203',
     '020204',
@@ -186,7 +187,7 @@ const Build02 = () => {
         setRoomSchedules(schedules);
         setLoading(false);
       } catch (err) {
-        console.error('강의실 데이터를 가져오는 중 오류 발생:', err);
+        // console.error('강의실 데이터를 가져오는 중 오류 발생:', err);
         setError('강의실 데이터를 불러올 수 없습니다.');
         setLoading(false);
       }

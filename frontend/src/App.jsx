@@ -246,6 +246,7 @@ import Room040509 from './number_04/5F/room040509';
 import Room040510 from './number_04/5F/room040510';
 
 import Room020101 from './number_02/1F/room020101';
+import Room020109 from './number_02/1F/room020109';
 import Room020202 from './number_02/2F/room020202';
 import Room020203 from './number_02/2F/room020203';
 import Room020204 from './number_02/2F/room020204';
@@ -621,6 +622,7 @@ function RoomRouter() {
     '040510': <Room040510 />,
 
     '020101': <Room020101 />,
+    '020109': <Room020109 />,
     '020202': <Room020202 />,
     '020203': <Room020203 />,
     '020204': <Room020204 />,
