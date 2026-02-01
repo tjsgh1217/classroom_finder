@@ -13,10 +13,10 @@ const Build71 = () => {
   const navigate = useNavigate();
 
   const floorRoomNumbers = {
-    1: [1, 18],
+    1: [1, 5, 17, 18],
   };
 
-  const availableRooms = ['710101', '710118'];
+  const availableRooms = ['710101', '710105', '710117', '710118'];
 
   const parseTimeSlot = (timeCode) => {
     const day = timeCode.charAt(0);

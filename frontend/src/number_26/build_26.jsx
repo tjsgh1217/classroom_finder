@@ -15,7 +15,7 @@ const Build26 = () => {
   const floorRoomNumbers = {
     1: [7],
     2: [14, 15, 16, 22, 23, 28, 29],
-    3: [],
+    3: [1],
   };
 
   const availableRooms = [
@@ -27,6 +27,7 @@ const Build26 = () => {
     '260223',
     '260228',
     '260229',
+    '260301',
   ];
 
   const parseTimeSlot = (timeCode) => {

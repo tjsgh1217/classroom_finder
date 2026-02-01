@@ -112,6 +112,7 @@ import Room06B101 from './number_06/B1F/room06B101';
 import Room06B102 from './number_06/B1F/room06B102';
 import Room060107 from './number_06/1F/room060107';
 import Room060114 from './number_06/1F/room060114';
+import Room060141 from './number_06/1F/room060141';
 import Room060201 from './number_06/2F/room060201';
 import Room060225 from './number_06/2F/room060225';
 import Room060230 from './number_06/2F/room060230';
@@ -143,6 +144,7 @@ import Room060505 from './number_06/5F/room060505';
 import Room060506 from './number_06/5F/room060506';
 import Room060509 from './number_06/5F/room060509';
 import Room060511 from './number_06/5F/room060511';
+import Room060515 from './number_06/5F/room060515';
 import Room060517 from './number_06/5F/room060517';
 import Room060510 from './number_06/5F/room060510';
 import Room060520 from './number_06/5F/room060520';
@@ -159,6 +161,7 @@ import Room260222 from './number_26/2F/room260222';
 import Room260223 from './number_26/2F/room260223';
 import Room260228 from './number_26/2F/room260228';
 import Room260229 from './number_26/2F/room260229';
+import Room260301 from './number_26/3F/room260301';
 
 import Room030106 from './number_03/1F/room030106';
 import Room030111 from './number_03/1F/room030111';
@@ -255,6 +258,7 @@ import Room020210 from './number_02/2F/room020210';
 import Room020211 from './number_02/2F/room020211';
 import Room020212 from './number_02/2F/room020212';
 import Room020301 from './number_02/3F/room020301';
+import Room020303 from './number_02/3F/room020303';
 import Room020305 from './number_02/3F/room020305';
 import Room020311 from './number_02/3F/room020311';
 import Room020312 from './number_02/3F/room020312';
@@ -368,6 +372,8 @@ import Room070518 from './number_07/5F/room070518';
 import Room070519 from './number_07/5F/room070519';
 
 import Room710101 from './number_71/1F/room710101';
+import Room710105 from './number_71/1F/room710105';
+import Room710117 from './number_71/1F/room710117';
 import Room710118 from './number_71/1F/room710118';
 
 import Room720106 from './number_72/1F/room720106';
@@ -488,6 +494,7 @@ function RoomRouter() {
     '06B102': <Room06B102 />,
     '060107': <Room060107 />,
     '060114': <Room060114 />,
+    '060141': <Room060141 />,
     '060201': <Room060201 />,
     '060225': <Room060225 />,
     '060230': <Room060230 />,
@@ -519,6 +526,7 @@ function RoomRouter() {
     '060506': <Room060506 />,
     '060509': <Room060509 />,
     '060511': <Room060511 />,
+    '060515': <Room060515 />,
     '060517': <Room060517 />,
     '060510': <Room060510 />,
     '060520': <Room060520 />,
@@ -535,6 +543,7 @@ function RoomRouter() {
     260223: <Room260223 />,
     260228: <Room260228 />,
     260229: <Room260229 />,
+    260301: <Room260301 />,
 
     '030106': <Room030106 />,
     '030111': <Room030111 />,
@@ -631,6 +640,7 @@ function RoomRouter() {
     '020211': <Room020211 />,
     '020212': <Room020212 />,
     '020301': <Room020301 />,
+    '020303': <Room020303 />,
     '020305': <Room020305 />,
     '020311': <Room020311 />,
     '020312': <Room020312 />,
@@ -744,6 +754,8 @@ function RoomRouter() {
     '070519': <Room070519 />,
 
     710101: <Room710101 />,
+    710105: <Room710105 />,
+    710117: <Room710117 />,
     710118: <Room710118 />,
 
     720106: <Room720106 />,
