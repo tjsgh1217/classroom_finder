@@ -14,10 +14,15 @@ const Build74 = () => {
 
   const floorRoomNumbers = {
     1: [],
-    2: [1, 2, 4],
+    2: [1, 2, 4, 8],
   };
 
-  const availableRooms = ['740201', '740202', '740204'];
+  const availableRooms = [
+    '740201',
+    '740202',
+    '740204',
+    '740208',
+  ];
 
   const parseTimeSlot = (timeCode) => {
     const day = timeCode.charAt(0);
